@@ -1,6 +1,5 @@
 # Website
-Portfolio Website
-Under Construction
+## Under Construction
     Web Desing 
             About
 
@@ -16,4 +15,3 @@ Under Construction
             Archive
             
     Git Hub Projects 
-
