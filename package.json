@@ -1,0 +1,14 @@
+{
+  "name": "my-github-pages-site",
+  "version": "1.0.0",
+  "description": "A simple website deployed using GitHub Pages and GitHub Actions.",
+  "main": "src/index.html",
+  "scripts": {
+    "build": "echo 'Building the project...'",
+    "deploy": "echo 'Deploying to GitHub Pages...'"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
