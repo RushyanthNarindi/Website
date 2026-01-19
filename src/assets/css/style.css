@@ -1,45 +1,236 @@
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
+/* Impressive modern styles (glassmorphism + gradient + responsive) */
+
+/* Import a clean font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root{
+  --bg-1: #0f172a;
+  --bg-2: #0b2545;
+  --accent: #7c5cff;
+  --muted: #9aa7c7;
+  --glass: rgba(255,255,255,0.06);
+  --glass-2: rgba(255,255,255,0.04);
+  --max-width: 1100px;
+  --radius: 14px;
+  --fw-regular: 400;
+  --fw-bold: 700;
 }
 
-header {
-    background: #333;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-weight:var(--fw-regular);
+  color:#e6eef8;
+  background: linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+  padding:40px 20px;
+  display:flex;
+  justify-content:center;
 }
 
-nav {
-    margin: 20px 0;
+/* animated soft gradient overlay */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background: radial-gradient(800px 400px at 10% 10%, rgba(124,92,255,0.12), transparent),
+              radial-gradient(600px 300px at 90% 80%, rgba(34,197,94,0.06), transparent);
+  pointer-events:none;
+  mix-blend-mode:screen;
+  animation: floatGrad 14s ease-in-out infinite;
+  z-index:0;
+}
+@keyframes floatGrad{
+  0%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-20px) scale(1.02)}
+  100%{transform:translateY(0) scale(1)}
 }
 
-nav a {
-    color: #fff;
-    margin: 0 15px;
-    text-decoration: none;
+/* page shell */
+.site{
+  width:100%;
+  max-width:var(--max-width);
+  position:relative;
+  z-index:1;
 }
 
-nav a:hover {
-    text-decoration: underline;
+/* header */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:28px;
+}
+.brand{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  text-decoration:none;
+  color:inherit;
+}
+.logo{
+  width:54px;
+  height:54px;
+  border-radius:12px;
+  background: linear-gradient(135deg, rgba(124,92,255,0.18), rgba(255,255,255,0.03));
+  display:grid;
+  place-items:center;
+  font-weight:700;
+  color:var(--accent);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6), inset 0 -6px 18px rgba(255,255,255,0.02);
+}
+.brand h1{
+  margin:0;
+  font-size:1.05rem;
+  letter-spacing:0.2px;
+}
+.brand p{margin:0;font-size:0.78rem;color:var(--muted)}
+
+/* nav */
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:10px;
+  margin:0;
+  padding:0;
+  align-items:center;
+}
+nav a{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:600;
+  font-size:0.92rem;
+  transition:all .18s ease;
+  background:transparent;
+  border:1px solid transparent;
+}
+nav a:hover, nav a:focus{
+  color:#ffffff;
+  transform:translateY(-3px);
+  box-shadow: 0 8px 18px rgba(2,6,23,0.6);
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  outline: none;
+}
+nav a.active{
+  background: linear-gradient(90deg, rgba(124,92,255,0.18), rgba(124,92,255,0.06));
+  color: #fff;
+  border:1px solid rgba(124,92,255,0.22);
+  box-shadow: 0 6px 24px rgba(124,92,255,0.08);
 }
 
-main {
-    padding: 20px;
+/* main card */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius: var(--radius);
+  padding:28px;
+  box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(8px) saturate(120%);
 }
 
-h1, h2, h3 {
-    color: #333;
+/* hero */
+.hero{
+  display:flex;
+  gap:28px;
+  align-items:center;
+  justify-content:space-between;
+}
+.hero-left{
+  flex:1;
+}
+.hero h2{
+  margin:0 0 12px 0;
+  font-size:1.9rem;
+  letter-spacing:-0.6px;
+}
+.hero p{margin:0 0 18px 0;color:var(--muted);font-size:1rem}
+
+/* under-construction badge */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:700;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(124,92,255,0.06));
+  color:var(--accent);
+  border: 1px solid rgba(124,92,255,0.12);
+  box-shadow: 0 6px 24px rgba(124,92,255,0.06);
 }
 
-footer {
-    text-align: center;
-    padding: 10px 0;
-    background: #333;
-    color: #fff;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+/* placeholder image / fingerprint */
+.hero-visual{
+  width:210px;
+  height:210px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.02);
+  display:grid;
+  place-items:center;
+  color:rgba(255,255,255,0.9);
+  font-weight:700;
+  font-size:1.2rem;
+  flex-shrink:0;
+}
+
+/* content area for markdown-like pages */
+.content{
+  margin-top:18px;
+  color:#dceafe;
+}
+.content h2{color:#fff}
+.content a{color:var(--accent);text-decoration:underline}
+.content ul{padding-left:1.2rem}
+
+/* footer */
+footer{
+  margin-top:22px;
+  color:var(--muted);
+  font-size:0.9rem;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+/* responsive */
+@media (max-width:880px){
+  .hero{flex-direction:column; align-items:flex-start}
+  .hero-visual{width:160px;height:160px}
+  nav ul{gap:6px;flex-wrap:wrap}
+  body{padding:28px 16px}
+}
+
+/* small screens - stack header */
+@media (max-width:560px){
+  .header{flex-direction:column;align-items:flex-start;gap:14px}
+  .brand p{display:none}
+  .hero h2{font-size:1.5rem}
+  .logo{width:46px;height:46px}
+}
+
+/* focus states for accessibility */
+a:focus, button:focus{
+  outline:3px solid rgba(124,92,255,0.16);
+  outline-offset:3px;
+  border-radius:8px;
+}
+
+/* subtle entrance animation for main content */
+.site > .card{
+  transform-origin:top center;
+  animation: popIn .5s cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes popIn{
+  from{opacity:0; transform:translateY(8px) scale(.995)}
+  to{opacity:1; transform:translateY(0) scale(1)}
 }
