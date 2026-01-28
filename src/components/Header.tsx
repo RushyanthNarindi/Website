@@ -6,7 +6,7 @@ export default function Header(){
     <header className="site-header">
       <div className="container header-row">
         <Link className="logo" to="/">
-          <span className="logo-text">Rushaynth</span>
+          <span className="logo-text">Rushyanth</span>
         </Link>
 
         <nav className="nav" id="site-nav">

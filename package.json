@@ -1,5 +1,5 @@
 {
-  "name": "rushaynth-website",
+  "name": "rushyanth-website",
   "version": "1.0.0",
   "private": true,
   "description": "Personal website rebuilt with React + TypeScript + Vite",
@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "echo \"Add linting if desired\""
   },
-  "author": "Rushaynth Narindi",
+  "author": "Rushyanth Narindi",
   "license": "MIT",
   "dependencies": {
     "react": "^18.2.0",
