@@ -3,6 +3,16 @@ Here is My WebSite https://rushyanthnarindi.github.io/Website/
 
 This project is a simple website deployed using GitHub Pages. It includes various sections such as About, Resume, Writings, and Contact. The website is designed to showcase personal information and projects.
 
+
+## Check List
+- ~~Logo~~
+- Home page Desing Unique
+- Stats Page
+- Sub pages
+- Nav Bar Unique
+
+
+
 ## Project Structure
 
 - `src/`: Contains all the source files for the website.
@@ -41,3 +51,4 @@ This project is a simple website deployed using GitHub Pages. It includes variou
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
+
