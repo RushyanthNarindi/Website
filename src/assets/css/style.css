@@ -16,6 +16,20 @@
   color-scheme: dark;
 }
 
+/* Custom site logo font: "Malvides".
+   Download the webfont files (WOFF2/WOFF) and place them in:
+   src/assets/fonts/Malvides-Regular.woff2 (and/or .woff)
+   If you don't provide the files the site will fall back to Inter.
+*/
+@font-face{
+  font-family: 'Malvides';
+  src: url('../fonts/Malvides-Regular.woff2') format('woff2'),
+       url('../fonts/Malvides-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -31,8 +45,9 @@ body{
 .container{max-width:var(--max-width);margin:0 auto;padding:1.25rem}
 .header-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .site-header{position:sticky;top:0;backdrop-filter:blur(6px);background:linear-gradient(180deg, rgba(5,7,13,0.6), rgba(5,7,13,0.35));border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
-.logo{display:inline-block;padding:0;margin:0;width:72px;height:72px;text-decoration:none}
-.logo img{display:block;width:100%;height:100%;object-fit:contain}
+.logo{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;padding:0;margin:0}
+.logo img{display:block;width:72px;height:72px;object-fit:contain}
+.logo-text{font-family:'Malvides','Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial; font-weight:800; font-size:1.4rem; color:var(--accent-1); letter-spacing:-0.02em}
 .site-title{font-weight:700}
 
 /* Nav */
@@ -213,8 +228,9 @@ footer{
   .header{flex-direction:column;align-items:flex-start;gap:14px}
   .brand p{display:none}
   .hero h2{font-size:1.5rem}
-  .logo{width:56px;height:56px}
-  .logo img{width:100%;height:100%}
+  .logo{display:inline-flex;align-items:center;gap:.4rem}
+  .logo img{width:56px;height:56px}
+  .logo-text{font-size:1.15rem}
 }
 
 /* focus states for accessibility */
