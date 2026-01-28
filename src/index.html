@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Pages Site</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Rushaynth Narindi — personal site.">
+    <title>Rushaynth Narindi</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/style.css">
+    <meta name="theme-color" content="#0f172a">
 </head>
 <body>
-    <header>
-        <h1>Rushaynth Narindi</h1>
-        <nav>
-            <ul>
-                <li><a href="about.md">About</a></li>
-                <li><a href="resume.md">Resume</a></li>
-                <li><a href="writings/article-1.md">Writings</a></li>
-                <li><a href="stats.md">Stats</a></li>
-                <li><a href="contact.md">Contact</a></li>
-            </ul>
-        </nav>
+    <header class="site-header">
+        <div class="container header-row">
+            <a class="logo" href="/">
+                <img src="assets/images/WtxtBbg.svg" alt="Rushaynth Narindi logo" width="48" height="48">
+                <span class="site-title">Rushaynth Narindi</span>
+            </a>
+
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+            <nav class="nav" id="site-nav">
+                <ul>
+                    <li><a href="about.md">About</a></li>
+                    <li><a href="resume.md">Resume</a></li>
+                    <li><a href="writings/article-1.md">Writings</a></li>
+                    <li><a href="stats.md">Stats</a></li>
+                    <li><a href="contact.md">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
+
     <main>
-        <section>
-            <h2>Under Construction</h2>
-            <p>This website is currently under construction. Please check back later for updates!</p>
+        <section class="hero">
+            <div class="container hero-inner">
+                <h1 class="reveal">Hi — I'm <span class="name">Rushaynth</span></h1>
+                <p class="lead reveal">I build things on the web. This site is under construction — follow for updates.</p>
+                <div class="hero-ctas reveal">
+                    <a class="btn" href="about.md">About</a>
+                    <a class="btn ghost" href="writings/article-1.md">Writings</a>
+                </div>
+            </div>
+            <div class="hero-bg" id="hero-bg" aria-hidden="true"></div>
+        </section>
+
+        <section class="grid container">
+            <article class="card reveal">
+                <h3>Under Construction</h3>
+                <p>This website is currently under construction. Please check back later for updates!</p>
+            </article>
+
+            <aside class="card small reveal">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="resume.md">Resume</a></li>
+                    <li><a href="stats.md">Stats</a></li>
+                    <li><a href="contact.md">Contact</a></li>
+                </ul>
+            </aside>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2023 My GitHub Pages Site</p>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Rushaynth Narindi</p>
+        </div>
     </footer>
+
     <script src="assets/js/main.js"></script>
 </body>
 </html>
