@@ -1,14 +1,27 @@
 {
-  "name": "my-github-pages-site",
+  "name": "rushaynth-website",
   "version": "1.0.0",
-  "description": "A simple website deployed using GitHub Pages and GitHub Actions.",
-  "main": "src/index.html",
+  "private": true,
+  "description": "Personal website rebuilt with React + TypeScript + Vite",
   "scripts": {
-    "build": "echo 'Building the project...'",
-    "deploy": "echo 'Deploying to GitHub Pages...'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "echo \"Add linting if desired\""
   },
-  "author": "Your Name",
+  "author": "Rushaynth Narindi",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^5.1.0",
+    "typescript": "^5.1.6",
+    "vite": "^7.3.1",
+    "vite-tsconfig-paths": "^4.2.0"
+  }
 }
