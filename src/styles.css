@@ -1,14 +1,20 @@
 /* moved styles from previous css, simplified for React app */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
-:root{--bg:#0f172a;--muted:#94a3b8;--accent-1:#7c3aed;--accent-2:#06b6d4;--max-width:1100px}
+:root{--bg:#ffffff;--text:#000000;--muted:#94a3b8;--accent-1:#7c3aed;--accent-2:#06b6d4;--max-width:1100px}
+/* sensible defaults so the toggle is visible before JS sets data-theme */
+:root{
+	--toggle-bg: rgba(255,255,255,0.03);
+	--toggle-border: rgba(255,255,255,0.12);
+	--toggle-color: #e6eef8;
+}
 
 /* Theme variables applied via [data-theme] on <html> */
 :root[data-theme='dark']{
-	--bg: #0f172a;
+	--bg: #000000;
 	--muted: #94a3b8;
-	--text: #e6eef8;
-	--header-bg: rgba(5,7,13,0.6);
+	--text: #ffffff;
+	--header-bg: rgba(0,0,0,0.85);
 	--link: var(--accent-1);
 	--toggle-bg: rgba(255,255,255,0.03);
 	--toggle-border: rgba(255,255,255,0.12);
@@ -16,17 +22,17 @@
 }
 
 :root[data-theme='light']{
-	--bg: #f7fafc;
+	--bg: #ffffff;
 	--muted: #475569;
-	--text: #0b1220;
-	--header-bg: rgba(255,255,255,0.8);
+	--text: #000000;
+	--header-bg: rgba(255,255,255,0.95);
 	--link: #7c3aed;
 	--toggle-bg: rgba(11,18,32,0.03);
 	--toggle-border: rgba(11,18,32,0.08);
 	--toggle-color: var(--text);
 }
 *{box-sizing:border-box}
-.site-root, body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:linear-gradient(180deg,#071028 0%, #071022 50%, #081226 100%);color:var(--text)}
+.site-root, body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:var(--bg);color:var(--text)}
 .container{max-width:var(--max-width);margin:0 auto;padding:1.25rem}
 .header-row{display:flex;align-items:center;justify-content:space-between}
 .site-header{position:sticky;top:0;padding:0.5rem 0;border-bottom:1px solid rgba(0,0,0,0.04);background:var(--header-bg);backdrop-filter:blur(6px)}
@@ -39,9 +45,18 @@
 .theme-toggle:hover{opacity:0.95}
 .theme-toggle:focus{outline:2px solid transparent;box-shadow:0 0 0 3px rgba(124,58,237,0.18)}
 
+/* SVG inside the toggle should inherit color and be sized consistently */
+.theme-toggle svg{width:18px;height:18px;display:block;fill:currentColor}
+
 /* small adjustments for light theme */
 :root[data-theme='light'] .site-header{border-bottom-color:rgba(0,0,0,0.06)}
 
 .hero{padding:3rem 0}
 .content{padding:2rem 0}
 .btn{display:inline-block}
+
+/* Stats page table */
+.content table{width:100%;border-collapse:collapse;margin-top:0.75rem}
+.content td{padding:.5rem .75rem;border-bottom:1px solid rgba(0,0,0,0.06)}
+.content td:first-child{color:var(--muted);width:60%}
+.content td strong{color:var(--text)}
