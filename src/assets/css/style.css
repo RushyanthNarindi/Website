@@ -3,6 +3,37 @@
 /* Import a clean font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
+:root{--bg:#ffffff;--text:#000000;--muted:#94a3b8;--accent-1:#7c3aed;--accent-2:#06b6d4;--max-width:1100px}
+/* sensible defaults before JS applies data-theme */
+:root{
+  --toggle-bg: rgba(255,255,255,0.03);
+  --toggle-border: rgba(255,255,255,0.12);
+  --toggle-color: #e6eef8;
+}
+
+/* theme variants */
+:root[data-theme='dark']{
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: #94a3b8;
+  --header-bg: rgba(0,0,0,0.85);
+  --link: var(--accent-1);
+  --toggle-bg: rgba(255,255,255,0.03);
+  --toggle-border: rgba(255,255,255,0.12);
+  --toggle-color: var(--text);
+}
+
+:root[data-theme='light']{
+  --bg: #ffffff;
+  --text: #000000;
+  --muted: #475569;
+  --header-bg: rgba(255,255,255,0.95);
+  --link: #7c3aed;
+  --toggle-bg: rgba(11,18,32,0.03);
+  --toggle-border: rgba(11,18,32,0.08);
+  --toggle-color: var(--text);
+}
+
 :root{
   --bg:#0f172a;
   --card:#0b1220;
@@ -34,8 +65,8 @@
 html,body{height:100%}
 body{
   margin:0;
-  background:linear-gradient(180deg,#071028 0%, #071022 50%, #081226 100%);
-  color:#e6eef8;
+  background: var(--bg);
+  color: var(--text);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   line-height:1.45;
@@ -44,7 +75,7 @@ body{
 /* Layout */
 .container{max-width:var(--max-width);margin:0 auto;padding:1.25rem}
 .header-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.site-header{position:sticky;top:0;backdrop-filter:blur(6px);background:linear-gradient(180deg, rgba(5,7,13,0.6), rgba(5,7,13,0.35));border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+.site-header{position:sticky;top:0;backdrop-filter:blur(6px);background:var(--header-bg);border-bottom:1px solid rgba(0,0,0,0.04);z-index:40}
 .logo{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;padding:0;margin:0}
 .logo img{display:block;width:72px;height:72px;object-fit:contain}
 .logo-text{font-family:'Malvides','Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial; font-weight:800; font-size:1.4rem; color:var(--accent-1); letter-spacing:-0.02em}
@@ -55,6 +86,23 @@ body{
 .nav a{color:var(--muted);text-decoration:none;padding:.5rem .6rem;border-radius:8px;transition:all .22s}
 .nav a:hover{color:#fff;background:var(--glass);transform:translateY(-2px)}
 .nav-toggle{display:none;background:none;border:0;color:#dbeafe;font-size:1.25rem}
+
+/* theme toggle in static header */
+#theme-toggle, .theme-toggle{
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: .35rem .6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #e6eef8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 36px;
+}
+#theme-toggle svg, .theme-toggle svg{width:18px;height:18px;display:block;fill:currentColor}
+#theme-toggle:focus, .theme-toggle:focus{outline:3px solid rgba(124,92,255,0.16);outline-offset:3px}
 
 /* Hero */
 .hero{position:relative;overflow:hidden;padding:4rem 0 6rem}
@@ -239,6 +287,12 @@ a:focus, button:focus{
   outline-offset:3px;
   border-radius:8px;
 }
+
+/* Stats page table for static pages */
+.content table{width:100%;border-collapse:collapse;margin-top:0.75rem}
+.content td{padding:.5rem .75rem;border-bottom:1px solid rgba(0,0,0,0.06)}
+.content td:first-child{color:var(--muted);width:60%}
+.content td strong{color:var(--text)}
 
 /* subtle entrance animation for main content */
 .site > .card{
