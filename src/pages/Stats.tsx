@@ -12,8 +12,9 @@ const GITHUB_USERNAME = 'RushyanthNarindi' // change this to your GitHub usernam
 const GITHUB_REPO = 'Website' // repository to show "this site" stats
 
 // Load profile data from profile.json
+
+const HARDCODED_BIRTHDATE = '1999-08-17';
 const [profile, setProfile] = useState({
-  birthdate: '1999-08-17',
   countriesVisited: ['USA', 'India', 'Abu Dhabi'],
   currentCity: 'Dallas, TX'
 });
@@ -32,7 +33,7 @@ export default function Stats(){
   const [totalStars, setTotalStars] = useState<number | null>(null)
   const [topRepos, setTopRepos] = useState<Repo[]>([])
   const [repoStats, setRepoStats] = useState<any | null>(null)
-  const [liveAge, setLiveAge] = useState<number>(() => getLiveAge(profile.birthdate))
+  const [liveAge, setLiveAge] = useState<number>(() => getLiveAge(HARDCODED_BIRTHDATE))
 
   // Live age calculation
   function getLiveAge(dobStr: string) {
@@ -89,10 +90,10 @@ export default function Stats(){
   // Live age interval
   useEffect(() => {
     const interval = setInterval(() => {
-      setLiveAge(getLiveAge(profile.birthdate));
+      setLiveAge(getLiveAge(HARDCODED_BIRTHDATE));
     }, 43);
     return () => clearInterval(interval);
-  }, [profile.birthdate]);
+  }, []);
 
   return (
     <div className="container content">
