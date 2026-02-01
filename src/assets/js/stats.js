@@ -1,21 +1,21 @@
-(function(){
-  // Fallback values copied from your reference
-  const FALLBACK = {
-    about: {
-      currentAge: 35.98242039275,
-      countriesVisited: 53,
-      currentCity: 'New York, NY'
-    },
-    site: {
-      stars: 1615,
-      watchers: 23,
-      forks: 953,
-      spoons: 0,
-      linterWarnings: 0,
-      openIssues: 1,
-      lastUpdated: 'January 28, 2026',
-      linesOfTS: 2272
-    }
+// Fetch profile data from profile.json
+(async function(){
+  let profile = {
+    birthdate: '1999-08-17',
+    countriesVisited: ['USA', 'India', 'Abu Dhabi'],
+    currentCity: 'Dallas, TX'
+  };
+  try {
+    const res = await fetch('/src/assets/data/profile.json');
+    if(res.ok) profile = await res.json();
+  } catch(e) {}
+
+  function getLiveAge(dobStr) {
+    const dob = new Date(dobStr);
+    const now = new Date();
+    const diff = now - dob;
+    const years = diff / (365.2425 * 24 * 60 * 60 * 1000);
+    return years;
   }
 
   // Try fetching repo info from GitHub for live numbers
@@ -29,12 +29,6 @@
     }
   }
 
-  function getLiveAge(dob) {
-    const now = new Date();
-    const diff = now - dob;
-    const years = diff / (365.2425 * 24 * 60 * 60 * 1000);
-    return years;
-  }
 
   async function render(){
     const container = document.querySelector('.content') || document.body
@@ -46,18 +40,18 @@
       <h2>About me</h2>
       <table>
         <tbody>
-          <tr><td>Current age</td><td><strong id="live-age">0</strong></td></tr>
-          <tr><td>Countries visited</td><td><strong>${FALLBACK.about.countriesVisited}</strong></td></tr>
-          <tr><td>Current city</td><td><strong>${FALLBACK.about.currentCity}</strong></td></tr>
+          <tr><td>Current age</td><td><strong id="live-age">${getLiveAge(profile.birthdate).toFixed(9)}</strong></td></tr>
+          <tr><td>Countries visited</td><td><strong>${profile.countriesVisited.length} (${profile.countriesVisited.join(", ")})</strong></td></tr>
+          <tr><td>Current city</td><td><strong>${profile.currentCity}</strong></td></tr>
         </tbody>
       </table>
 
       <h2>This site</h2>
       <table>
         <tbody>
-          <tr><td>Stars this repository has on github</td><td><strong>${repo?.stargazers_count ?? FALLBACK.site.stars}</strong></td></tr>
-          <tr><td>Number of people watching this repository</td><td><strong>${repo?.subscribers_count ?? repo?.watchers_count ?? FALLBACK.site.watchers}</strong></td></tr>
-          <tr><td>Number of forks</td><td><strong>${repo?.forks_count ?? FALLBACK.site.forks}</strong></td></tr>
+          <tr><td>Stars this repository has on github</td><td><strong>${repo?.stargazers_count ?? 0}</strong></td></tr>
+          <tr><td>Number of people watching this repository</td><td><strong>${repo?.subscribers_count ?? repo?.watchers_count ?? 0}</strong></td></tr>
+          <tr><td>Number of forks</td><td><strong>${repo?.forks_count ?? 0}</strong></td></tr>
           <tr><td>Number of spoons</td><td><strong>${FALLBACK.site.spoons}</strong></td></tr>
           <tr><td>Number of linter warnings</td><td><strong>${FALLBACK.site.linterWarnings}</strong></td></tr>
           <tr><td>Open github issues</td><td><strong>${repo?.open_issues_count ?? FALLBACK.site.openIssues}</strong></td></tr>
