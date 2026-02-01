@@ -44,6 +44,24 @@ export default function Stats(){
     return years;
   }
 
+  function getAgeBreakdown(dobStr: string) {
+    const dob = new Date(dobStr);
+    const now = new Date();
+    let diff = now.getTime() - dob.getTime();
+    let years = Math.floor(diff / (365.2425 * 24 * 60 * 60 * 1000));
+    diff -= years * 365.2425 * 24 * 60 * 60 * 1000;
+    let months = Math.floor(diff / (30.436875 * 24 * 60 * 60 * 1000));
+    diff -= months * 30.436875 * 24 * 60 * 60 * 1000;
+    let days = Math.floor(diff / (24 * 60 * 60 * 1000));
+    diff -= days * 24 * 60 * 60 * 1000;
+    let hours = Math.floor(diff / (60 * 60 * 1000));
+    diff -= hours * 60 * 60 * 1000;
+    let minutes = Math.floor(diff / (60 * 1000));
+    diff -= minutes * 60 * 1000;
+    let seconds = Math.floor(diff / 1000);
+    return { years, months, days, hours, minutes, seconds };
+  }
+
   useEffect(() => {
     let mounted = true
     async function load(){
@@ -107,7 +125,19 @@ export default function Stats(){
           <h2>About me</h2>
           <table>
             <tbody>
-              <tr><td>Current age</td><td><strong>{liveAge.toFixed(9)}</strong></td></tr>
+              <tr>
+                <td>Current age</td>
+                <td>
+                  <strong>{liveAge.toFixed(9)}</strong>
+                  <br />
+                  <span style={{fontSize:'0.95em',color:'var(--muted)'}}>
+                    {(() => {
+                      const b = getAgeBreakdown(HARDCODED_BIRTHDATE);
+                      return `${b.years} years, ${b.months} months, ${b.days} days, ${b.hours} hours, ${b.minutes} minutes, ${b.seconds} seconds`;
+                    })()}
+                  </span>
+                </td>
+              </tr>
               <tr><td>Countries visited</td><td><strong>{profile.countriesVisited.length} ({profile.countriesVisited.join(", ")})</strong></td></tr>
               <tr><td>Current city</td><td><strong>{profile.currentCity}</strong></td></tr>
             </tbody>
