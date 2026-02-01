@@ -45,23 +45,6 @@
             <p>This website is designed to showcase my personal experiences in IT, my projects, and my writings. Here, you will find information about my background, skills, and the work I have done in the field of technology.</p>
 
 
-                        <h2>Profile</h2>
-                        <div id="profile-info">
-                                <p><strong>Birthdate:</strong> <span id="profile-birthdate">Loading…</span></p>
-                                <p><strong>Countries Visited:</strong> <span id="profile-countries">Loading…</span></p>
-                                <p><strong>Current City:</strong> <span id="profile-city">Loading…</span></p>
-                        </div>
-
-                        <script>
-                        fetch('assets/data/profile.json')
-                            .then(res => res.ok ? res.json() : null)
-                            .then(data => {
-                                if (!data) return;
-                                document.getElementById('profile-birthdate').textContent = data.birthdate;
-                                document.getElementById('profile-countries').textContent = data.countriesVisited.length + ' (' + data.countriesVisited.join(', ') + ')';
-                                document.getElementById('profile-city').textContent = data.currentCity;
-                            });
-                        </script>
 
             <h2>Projects</h2>
             <p>Throughout my career, I have worked on numerous projects that demonstrate my abilities and creativity. Each project reflects my commitment to excellence and my desire to push the boundaries of what is possible.</p>
