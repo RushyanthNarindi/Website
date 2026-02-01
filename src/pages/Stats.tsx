@@ -38,6 +38,15 @@ export default function Stats(){
   const [totalStars, setTotalStars] = useState<number | null>(null)
   const [topRepos, setTopRepos] = useState<Repo[]>([])
   const [repoStats, setRepoStats] = useState<any | null>(null)
+  const [liveAge, setLiveAge] = useState<number>(() => getLiveAge(new Date(1999, 7, 17)))
+
+  // Live age calculation
+  function getLiveAge(dob: Date) {
+    const now = new Date();
+    const diff = now.getTime() - dob.getTime();
+    const years = diff / (365.2425 * 24 * 60 * 60 * 1000);
+    return years;
+  }
 
   useEffect(() => {
     let mounted = true
@@ -49,7 +58,7 @@ export default function Stats(){
         if(!userRes.ok) throw new Error(`GitHub user request failed: ${userRes.status}`)
         const user = await userRes.json()
 
-  const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`)
+        const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`)
         if(!reposRes.ok) throw new Error(`GitHub repos request failed: ${reposRes.status}`)
         const repos: Repo[] = await reposRes.json()
 
@@ -82,6 +91,15 @@ export default function Stats(){
     return () => { mounted = false }
   }, [])
 
+  // Live age interval
+  useEffect(() => {
+    const dob = new Date(1999, 7, 17); // August is 7 (0-based)
+    const interval = setInterval(() => {
+      setLiveAge(getLiveAge(dob));
+    }, 43);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="container content">
       <h1>Stats</h1>
@@ -91,6 +109,15 @@ export default function Stats(){
 
       {!loading && !error && (
         <section>
+          <h2>About me</h2>
+          <table>
+            <tbody>
+              <tr><td>Current age</td><td><strong>{liveAge.toFixed(9)}</strong></td></tr>
+              <tr><td>Countries visited</td><td><strong>{FALLBACK.about.countriesVisited}</strong></td></tr>
+              <tr><td>Current city</td><td><strong>{FALLBACK.about.currentCity}</strong></td></tr>
+            </tbody>
+          </table>
+
           <p>GitHub user: <strong>{GITHUB_USERNAME}</strong></p>
           <ul>
             <li>Followers: <strong>{followers ?? '—'}</strong></li>

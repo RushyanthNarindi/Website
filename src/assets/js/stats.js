@@ -29,17 +29,24 @@
     }
   }
 
+  function getLiveAge(dob) {
+    const now = new Date();
+    const diff = now - dob;
+    const years = diff / (365.2425 * 24 * 60 * 60 * 1000);
+    return years;
+  }
+
   async function render(){
     const container = document.querySelector('.content') || document.body
-
     const repo = await getRepo('RushyanthNarindi','Website')
 
+    // Insert a span for live age
     const html = `
       <h1>Stats</h1>
       <h2>About me</h2>
       <table>
         <tbody>
-          <tr><td>Current age</td><td><strong>${FALLBACK.about.currentAge}</strong></td></tr>
+          <tr><td>Current age</td><td><strong id="live-age">0</strong></td></tr>
           <tr><td>Countries visited</td><td><strong>${FALLBACK.about.countriesVisited}</strong></td></tr>
           <tr><td>Current city</td><td><strong>${FALLBACK.about.currentCity}</strong></td></tr>
         </tbody>
@@ -59,8 +66,18 @@
         </tbody>
       </table>
     `
-
     container.innerHTML = html
+
+    // Live age update
+    const dob = new Date(1999, 7, 17); // August is month 7 (0-based)
+    const ageEl = document.getElementById('live-age');
+    function updateAge() {
+      if (ageEl) {
+        ageEl.textContent = getLiveAge(dob).toFixed(9);
+      }
+    }
+    updateAge();
+    setInterval(updateAge, 43);
   }
 
   render()
