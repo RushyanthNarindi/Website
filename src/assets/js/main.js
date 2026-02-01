@@ -48,6 +48,18 @@
 			setIcon(document.getElementById('theme-toggle'), t)
 		}
 
+		function broadcastThemeChange(t){
+			// Dispatch storage event for React app to listen on (cross-tab communication)
+			try{
+				window.dispatchEvent(new StorageEvent('storage', {
+					key: 'theme',
+					newValue: t,
+					oldValue: null,
+					storageArea: localStorage
+				}))
+			}catch(e){}
+		}
+
 		var saved = null
 		try{ saved = localStorage.getItem('theme') }catch(e){}
 		var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
@@ -73,6 +85,7 @@
 				theme = theme === 'dark' ? 'light' : 'dark'
 				try{ localStorage.setItem('theme', theme) }catch(e){}
 				applyTheme(theme)
+				broadcastThemeChange(theme)
 			})
 		}
 	})()

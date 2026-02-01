@@ -34,6 +34,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }){
     }
   }, [theme])
 
+  // Listen for storage changes from other tabs/pages
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'theme' && event.newValue) {
+        const newTheme = event.newValue as Theme
+        if (newTheme === 'light' || newTheme === 'dark') {
+          setTheme(newTheme)
+          document.documentElement.setAttribute('data-theme', newTheme)
+        }
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+    return () => window.removeEventListener('storage', handleStorageChange)
+  }, [])
+
   const toggleTheme = () => setTheme(t => (t === 'dark' ? 'light' : 'dark'))
 
   return (
