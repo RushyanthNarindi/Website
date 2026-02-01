@@ -11,24 +11,18 @@ type Repo = {
 const GITHUB_USERNAME = 'RushyanthNarindi' // change this to your GitHub username if needed
 const GITHUB_REPO = 'Website' // repository to show "this site" stats
 
-// static fallback values (from your personal-site reference)
-const FALLBACK = {
-  about: {
-    currentAge: 35.98242039275,
-    countriesVisited: 53,
-    currentCity: 'New York, NY'
-  },
-  site: {
-    stars: 1615,
-    watchers: 23,
-    forks: 953,
-    spoons: 0,
-    linterWarnings: 0,
-    openIssues: 1,
-    lastUpdated: 'January 28, 2026',
-    linesOfTS: 2272
-  }
-}
+// Load profile data from profile.json
+const [profile, setProfile] = useState({
+  birthdate: '1999-08-17',
+  countriesVisited: ['USA', 'India', 'Abu Dhabi'],
+  currentCity: 'Dallas, TX'
+});
+
+useEffect(() => {
+  fetch('/src/assets/data/profile.json')
+    .then(res => res.ok ? res.json() : null)
+    .then(data => { if(data) setProfile(data); });
+}, []);
 
 export default function Stats(){
   const [loading, setLoading] = useState(true)
@@ -38,10 +32,11 @@ export default function Stats(){
   const [totalStars, setTotalStars] = useState<number | null>(null)
   const [topRepos, setTopRepos] = useState<Repo[]>([])
   const [repoStats, setRepoStats] = useState<any | null>(null)
-  const [liveAge, setLiveAge] = useState<number>(() => getLiveAge(new Date(1999, 7, 17)))
+  const [liveAge, setLiveAge] = useState<number>(() => getLiveAge(profile.birthdate))
 
   // Live age calculation
-  function getLiveAge(dob: Date) {
+  function getLiveAge(dobStr: string) {
+    const dob = new Date(dobStr);
     const now = new Date();
     const diff = now.getTime() - dob.getTime();
     const years = diff / (365.2425 * 24 * 60 * 60 * 1000);
@@ -93,12 +88,11 @@ export default function Stats(){
 
   // Live age interval
   useEffect(() => {
-    const dob = new Date(1999, 7, 17); // August is 7 (0-based)
     const interval = setInterval(() => {
-      setLiveAge(getLiveAge(dob));
+      setLiveAge(getLiveAge(profile.birthdate));
     }, 43);
     return () => clearInterval(interval);
-  }, []);
+  }, [profile.birthdate]);
 
   return (
     <div className="container content">
@@ -113,8 +107,8 @@ export default function Stats(){
           <table>
             <tbody>
               <tr><td>Current age</td><td><strong>{liveAge.toFixed(9)}</strong></td></tr>
-              <tr><td>Countries visited</td><td><strong>{FALLBACK.about.countriesVisited}</strong></td></tr>
-              <tr><td>Current city</td><td><strong>{FALLBACK.about.currentCity}</strong></td></tr>
+              <tr><td>Countries visited</td><td><strong>{profile.countriesVisited.length} ({profile.countriesVisited.join(", ")})</strong></td></tr>
+              <tr><td>Current city</td><td><strong>{profile.currentCity}</strong></td></tr>
             </tbody>
           </table>
 
@@ -122,20 +116,20 @@ export default function Stats(){
           <ul>
             <li>Followers: <strong>{followers ?? '—'}</strong></li>
             <li>Public repos: <strong>{publicRepos ?? '—'}</strong></li>
-            <li>Total stars (sum): <strong>{totalStars ?? FALLBACK.site.stars}</strong></li>
+            <li>Total stars (sum): <strong>{totalStars ?? 0}</strong></li>
           </ul>
 
           <h2>This site</h2>
           <table>
             <tbody>
-              <tr><td>Stars this repository has on GitHub</td><td><strong>{repoStats?.stargazers_count ?? FALLBACK.site.stars}</strong></td></tr>
-              <tr><td>Number of people watching this repository</td><td><strong>{repoStats?.subscribers_count ?? repoStats?.watchers_count ?? FALLBACK.site.watchers}</strong></td></tr>
-              <tr><td>Number of forks</td><td><strong>{repoStats?.forks_count ?? FALLBACK.site.forks}</strong></td></tr>
-              <tr><td>Number of spoons</td><td><strong>{FALLBACK.site.spoons}</strong></td></tr>
-              <tr><td>Number of linter warnings</td><td><strong>{FALLBACK.site.linterWarnings}</strong></td></tr>
-              <tr><td>Open GitHub issues</td><td><strong>{repoStats?.open_issues_count ?? FALLBACK.site.openIssues}</strong></td></tr>
-              <tr><td>Last updated at</td><td><strong>{repoStats?.updated_at ? new Date(repoStats.updated_at).toLocaleString() : FALLBACK.site.lastUpdated}</strong></td></tr>
-              <tr><td>Lines of TypeScript powering this website</td><td><strong>{FALLBACK.site.linesOfTS}</strong></td></tr>
+              <tr><td>Stars this repository has on GitHub</td><td><strong>{repoStats?.stargazers_count ?? 0}</strong></td></tr>
+              <tr><td>Number of people watching this repository</td><td><strong>{repoStats?.subscribers_count ?? repoStats?.watchers_count ?? 0}</strong></td></tr>
+              <tr><td>Number of forks</td><td><strong>{repoStats?.forks_count ?? 0}</strong></td></tr>
+              <tr><td>Number of spoons</td><td><strong>0</strong></td></tr>
+              <tr><td>Number of linter warnings</td><td><strong>0</strong></td></tr>
+              <tr><td>Open GitHub issues</td><td><strong>{repoStats?.open_issues_count ?? 0}</strong></td></tr>
+              <tr><td>Last updated at</td><td><strong>{repoStats?.updated_at ? new Date(repoStats.updated_at).toLocaleString() : 'N/A'}</strong></td></tr>
+              <tr><td>Lines of TypeScript powering this website</td><td><strong>0</strong></td></tr>
             </tbody>
           </table>
 

@@ -1,5 +1,5 @@
 {
-  "birthdate": "1999-01-01",
-  "countriesVisited": 53,
+  "birthdate": "1999-08-17",
+  "countriesVisited": ["USA", "India", "Abu Dhabi"],
   "currentCity": "Dallas, TX"
 }

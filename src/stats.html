@@ -41,8 +41,24 @@
 
     <main class="container content">
         <article class="page">
-            <h1>Stats</h1>
-            <p>Site statistics and interesting metrics will appear here. You can add GitHub streaks, visitor counts, or other badges as desired.</p>
+                        <h1>Stats</h1>
+                        <h2>Profile</h2>
+                        <div id="profile-info">
+                                <p><strong>Birthdate:</strong> <span id="profile-birthdate">Loading…</span></p>
+                                <p><strong>Countries Visited:</strong> <span id="profile-countries">Loading…</span></p>
+                                <p><strong>Current City:</strong> <span id="profile-city">Loading…</span></p>
+                        </div>
+
+                        <script>
+                        fetch('assets/data/profile.json')
+                            .then(res => res.ok ? res.json() : null)
+                            .then(data => {
+                                if (!data) return;
+                                document.getElementById('profile-birthdate').textContent = data.birthdate;
+                                document.getElementById('profile-countries').textContent = data.countriesVisited.length + ' (' + data.countriesVisited.join(', ') + ')';
+                                document.getElementById('profile-city').textContent = data.currentCity;
+                            });
+                        </script>
         </article>
     </main>
 

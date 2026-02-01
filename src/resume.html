@@ -43,7 +43,23 @@
         <article class="page">
             <h1>Resume</h1>
 
-            <h2>Personal Experience in IT</h2>
+                        <h2>Profile</h2>
+                        <div id="profile-info">
+                                <p><strong>Birthdate:</strong> <span id="profile-birthdate">Loading…</span></p>
+                                <p><strong>Countries Visited:</strong> <span id="profile-countries">Loading…</span></p>
+                                <p><strong>Current City:</strong> <span id="profile-city">Loading…</span></p>
+                        </div>
+
+                        <script>
+                        fetch('assets/data/profile.json')
+                            .then(res => res.ok ? res.json() : null)
+                            .then(data => {
+                                if (!data) return;
+                                document.getElementById('profile-birthdate').textContent = data.birthdate;
+                                document.getElementById('profile-countries').textContent = data.countriesVisited.length + ' (' + data.countriesVisited.join(', ') + ')';
+                                document.getElementById('profile-city').textContent = data.currentCity;
+                            });
+                        </script>
             <ul>
                 <li><strong>Job Title 1</strong><br>Company Name, Location — Dates of Employment<br>- Description of responsibilities and achievements.</li>
                 <li><strong>Job Title 2</strong><br>Company Name, Location — Dates of Employment<br>- Description of responsibilities and achievements.</li>
