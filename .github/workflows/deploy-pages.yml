@@ -15,11 +15,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # If your site is already static in src/, upload that folder
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build with Vite
+      run: npm run build
+
     - name: Upload pages artifact
       uses: actions/upload-pages-artifact@v4
       with:
-        path: 'src'    # change if your index.html is in root -> use '.' or './public'
+        path: 'dist'
 
     - name: Deploy to GitHub Pages
       uses: actions/deploy-pages@v4
