@@ -48,6 +48,45 @@ This project is a simple website deployed using GitHub Pages. It includes variou
 4. Modify the content in the `src/` directory as needed.
 5. Push changes to the repository to trigger deployment to GitHub Pages.
 
+## Production Contact Form (Long-Term)
+
+This project now supports a server-side contact endpoint at `api/contact.js` for production-grade email delivery.
+
+### Recommended host
+
+- Vercel (serverless API route support out of the box)
+
+### Required environment variables
+
+- `RESEND_API_KEY`
+- `PORTFOLIO_FROM_EMAIL` (must be a verified sender in Resend)
+- `PORTFOLIO_TO_EMAIL` (where contact messages are delivered)
+
+Optional frontend variable:
+
+- `VITE_CONTACT_API_URL` (if your API is not on `/api/contact`)
+- `CONTACT_ALLOWED_ORIGINS` (optional comma-separated allowlist for browser origins)
+
+### How it works
+
+1. Contact page posts form data to `/api/contact`
+2. Server validates input and checks honeypot spam field
+3. Server sends email using Resend API with server-side secrets
+
+### Full setup checklist
+
+1. Create a Resend account and verify your sending domain
+2. Create a sender address and use it in `PORTFOLIO_FROM_EMAIL`
+3. Set `PORTFOLIO_TO_EMAIL` to the inbox where you want messages
+4. Add env vars from `.env.example` in your deployment provider
+5. Deploy frontend + API on Vercel (recommended)
+
+### Hosting notes
+
+- GitHub Pages cannot run `api/contact.js` (static hosting only)
+- If you keep GitHub Pages for frontend, deploy API separately and set `VITE_CONTACT_API_URL` to the external API URL
+- Configure `CONTACT_ALLOWED_ORIGINS` when frontend and API are on different domains
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.

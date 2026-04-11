@@ -1,4 +1,12 @@
 /// <reference types="vite/client" />
+interface ImportMetaEnv {
+  readonly VITE_CONTACT_API_URL?: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
 declare module '*.css';
 declare module '*.svg?react' {
 	import * as React from 'react';

@@ -13,13 +13,7 @@ export default function Contact(){
     const name = String(formData.get('name') || '').trim()
     const email = String(formData.get('email') || '').trim()
     const message = String(formData.get('message') || '').trim()
-    const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
-
-    if(!endpoint){
-      setSubmitState('error')
-      setSubmitMessage('Contact form is not configured yet. Add VITE_FORMSPREE_ENDPOINT in your environment.')
-      return
-    }
+    const endpoint = import.meta.env.VITE_CONTACT_API_URL || '/api/contact'
 
     setIsSubmitting(true)
     setSubmitState('idle')
@@ -36,20 +30,23 @@ export default function Contact(){
           name,
           email,
           message,
-          _subject: `Portfolio contact from ${name || 'Website visitor'}`
+          website: String(formData.get('_gotcha') || '')
         })
       })
 
       if(!response.ok){
-        throw new Error(`Request failed with status ${response.status}`)
+        const data = await response.json().catch(() => null)
+        const apiMessage = data?.error || `Request failed with status ${response.status}`
+        throw new Error(apiMessage)
       }
 
       setSubmitState('success')
       setSubmitMessage('Message sent successfully. Thank you!')
       form.reset()
     }catch(error){
+      const reason = error instanceof Error ? error.message : 'Unknown error'
       setSubmitState('error')
-      setSubmitMessage('Could not send message. Please try again in a few minutes.')
+      setSubmitMessage(`Could not send message. ${reason}`)
     }finally{
       setIsSubmitting(false)
     }
