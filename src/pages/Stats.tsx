@@ -14,18 +14,12 @@ const GITHUB_REPO = 'Website' // repository to show "this site" stats
 // Load profile data from profile.json
 
 const HARDCODED_BIRTHDATE = '1999-08-17';
-const [profile, setProfile] = useState({
-  countriesVisited: ['USA', 'India', 'Abu Dhabi'],
-  currentCity: 'Dallas, TX'
-});
-
-useEffect(() => {
-  fetch('/src/assets/data/profile.json')
-    .then(res => res.ok ? res.json() : null)
-    .then(data => { if(data) setProfile(data); });
-}, []);
 
 export default function Stats(){
+  const [profile, setProfile] = useState({
+    countriesVisited: ['USA', 'India', 'Abu Dhabi'],
+    currentCity: 'Dallas, TX'
+  });
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [followers, setFollowers] = useState<number | null>(null)
@@ -61,6 +55,12 @@ export default function Stats(){
     let seconds = Math.floor(diff / 1000);
     return { years, months, days, hours, minutes, seconds };
   }
+
+  useEffect(() => {
+    fetch('/src/assets/data/profile.json')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => { if(data) setProfile(data); });
+  }, []);
 
   useEffect(() => {
     let mounted = true
