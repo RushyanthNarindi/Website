@@ -36,11 +36,20 @@
 .container{max-width:var(--max-width);margin:0 auto;padding:1.25rem}
 .header-row{display:flex;align-items:center;justify-content:space-between}
 .site-header{position:sticky;top:0;padding:0.5rem 0;border-bottom:1px solid rgba(0,0,0,0.04);background:var(--header-bg);backdrop-filter:blur(6px)}
-.logo{font-weight:800;color:var(--link);text-decoration:none;font-size:1.4rem}
-.logo svg {
+.logo{display:inline-flex;align-items:center;text-decoration:none}
+.logo-mark{
 	display:block;
-	color: var(--link);
-	fill: currentColor;
+	width:190px;
+	height:44px;
+	background:var(--accent-1);
+	-webkit-mask-repeat:no-repeat;
+	mask-repeat:no-repeat;
+	-webkit-mask-position:center;
+	mask-position:center;
+	-webkit-mask-size:contain;
+	mask-size:contain;
+	-webkit-mask-mode:luminance;
+	mask-mode:luminance;
 }
 .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.75rem}
 .nav a{text-decoration:none;color:var(--muted);padding:.4rem .6rem;border-radius:8px}
