@@ -8,7 +8,7 @@ export default function Home(){
         <p className="lead reveal">I build things on the web. This site is under construction — follow for updates.</p>
         <div className="hero-ctas reveal">
           <a className="btn" href="/about">About</a>
-          <a className="btn ghost" href="/project">Projects</a>
+          <a className="btn ghost" href="/resume">Resume</a>
         </div>
       </div>
       <div className="hero-bg" id="hero-bg" aria-hidden="true"></div>

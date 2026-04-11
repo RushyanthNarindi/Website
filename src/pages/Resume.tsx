@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Project(){
+export default function Resume(){
   return (
     <div className="container content">
-      <h1>Projects</h1>
+      <h1>Resume</h1>
       <h2>Personal Experience in IT</h2>
       <ul>
         <li><strong>Job Title 1</strong><br/>Company Name, Location — Dates of Employment<br/>- Description of responsibilities and achievements.</li>

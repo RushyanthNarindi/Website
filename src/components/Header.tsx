@@ -32,9 +32,15 @@ export default function Header(){
                 </Link>
               </li>
               <li>
-                <Link to="/project" onClick={closeNav} className="nav-pill">
+                <Link to="/resume" onClick={closeNav} className="nav-pill">
                   <svg viewBox="0 0 24 24" aria-hidden><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
-                  Project
+                  Resume
+                </Link>
+              </li>
+              <li>
+                <Link to="/writings" onClick={closeNav} className="nav-pill">
+                  <svg viewBox="0 0 24 24" aria-hidden><path d="M4 5.5A2.5 2.5 0 016.5 3H20v14H6.5A2.5 2.5 0 004 19.5V5.5zm2.5-.5a1 1 0 000 2H18V5H6.5zM6 20c0-.55.45-1 1-1h13v2H7a1 1 0 01-1-1z"/></svg>
+                  Writings
                 </Link>
               </li>
               <li>

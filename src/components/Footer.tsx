@@ -9,7 +9,7 @@ export default function Footer(){
           <div className="avatar" aria-hidden>RN</div>
           <div>
             <h2>Rushyanth Narindi</h2>
-            <p>Personal portfolio and experiments in web, data, and software projects.</p>
+            <p>Azure Cloud Engineer</p>
             <small>© 2026 · Source</small>
           </div>
         </section>
@@ -18,7 +18,8 @@ export default function Footer(){
           <h3>Explore</h3>
           <div>
             <Link to="/about">About</Link>
-            <Link to="/project">Projects</Link>
+            <Link to="/resume">Resume</Link>
+            <Link to="/writings">Writings</Link>
             <Link to="/stats">Stats</Link>
             <Link to="/contact">Contact</Link>
           </div>
