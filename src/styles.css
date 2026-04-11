@@ -84,6 +84,23 @@ h1,h2,h3{font-weight:700}
 .content td:first-child{color:var(--muted);width:60%}
 .content td strong{color:var(--text)}
 
+/* Stats: GitHub activity chart */
+.stats-activity{margin-top:1rem;padding:0.9rem;border:1px solid rgba(0,0,0,0.08);border-radius:12px;background:rgba(124,58,237,0.03)}
+.stats-activity img{width:100%;height:auto;display:block;border-radius:8px}
+.stats-activity p{margin:.65rem 0 0;color:var(--muted);font-size:.95rem}
+
+/* Resume: projects + skills */
+.resume-projects{display:grid;gap:1rem}
+.project-card{padding:1rem;border:1px solid rgba(0,0,0,0.08);border-radius:12px;background:rgba(124,58,237,0.02)}
+.project-card h3{margin:.15rem 0 .5rem}
+.project-card p{margin:0;color:var(--muted);line-height:1.6}
+.project-skills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.85rem}
+.skill-chip{display:inline-flex;align-items:center;padding:.28rem .6rem;border-radius:999px;border:1px solid rgba(124,58,237,0.24);background:rgba(124,58,237,0.08);color:var(--text);font-size:.86rem;font-weight:600}
+
+:root[data-theme='dark'] .stats-activity,
+:root[data-theme='dark'] .project-card{border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.03)}
+:root[data-theme='dark'] .skill-chip{border-color:rgba(124,58,237,0.4);background:rgba(124,58,237,0.2)}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -144,6 +161,9 @@ h3{font-size:clamp(1rem,2.5vw,1.5rem)}
 
   /* Stack hero CTAs vertically */
   .hero-ctas{flex-direction:column;align-items:flex-start}
+
+	.stats-activity{padding:0.7rem}
+	.project-card{padding:0.9rem}
 }
 
 /* ---- Tablet (769px – 1024px) ---- */

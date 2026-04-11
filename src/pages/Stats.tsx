@@ -10,6 +10,7 @@ type Repo = {
 
 const GITHUB_USERNAME = 'RushyanthNarindi' // change this to your GitHub username if needed
 const GITHUB_REPO = 'Website' // repository to show "this site" stats
+const GITHUB_ACTIVITY_IMAGE = `https://ghchart.rshah.org/${GITHUB_USERNAME}`
 
 // Load profile data from profile.json
 
@@ -175,6 +176,18 @@ export default function Stats(){
               </li>
             ))}
           </ol>
+
+          <h2>GitHub activity</h2>
+          <section className="stats-activity" aria-label="GitHub contribution activity">
+            <img
+              src={GITHUB_ACTIVITY_IMAGE}
+              alt={`${GITHUB_USERNAME} contribution activity chart`}
+              loading="lazy"
+            />
+            <p>
+              Live contribution heatmap from GitHub for <strong>{GITHUB_USERNAME}</strong>.
+            </p>
+          </section>
         </section>
       )}
     </div>

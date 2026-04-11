@@ -11,10 +11,31 @@ export default function Resume(){
       </ul>
 
       <h2>Projects</h2>
-      <ul>
-        <li><strong>Project Name 1</strong><br/>Brief description of the project, technologies used, and your role.</li>
-        <li><strong>Project Name 2</strong><br/>Brief description of the project, technologies used, and your role.</li>
-      </ul>
+      <div className="resume-projects">
+        <article className="project-card">
+          <h3>Personal Portfolio Website</h3>
+          <p>Built a React + TypeScript personal site with routing, theme switching, and dynamic GitHub-backed stats.</p>
+          <div className="project-skills" aria-label="Skills used in Personal Portfolio Website">
+            <span className="skill-chip">React</span>
+            <span className="skill-chip">TypeScript</span>
+            <span className="skill-chip">Vite</span>
+            <span className="skill-chip">CSS</span>
+            <span className="skill-chip">GitHub API</span>
+          </div>
+        </article>
+
+        <article className="project-card">
+          <h3>Data and Automation Toolkit</h3>
+          <p>Created automation scripts and data pipelines to process datasets, generate reports, and reduce repetitive manual tasks.</p>
+          <div className="project-skills" aria-label="Skills used in Data and Automation Toolkit">
+            <span className="skill-chip">Python</span>
+            <span className="skill-chip">Pandas</span>
+            <span className="skill-chip">SQL</span>
+            <span className="skill-chip">Shell Scripting</span>
+            <span className="skill-chip">Git</span>
+          </div>
+        </article>
+      </div>
 
       <h2>Education</h2>
       <p><strong>Degree</strong><br/>University Name, Location — Graduation Year</p>
