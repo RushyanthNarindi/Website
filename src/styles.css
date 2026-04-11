@@ -132,6 +132,14 @@ h1,h2,h3{font-weight:700}
 .contact-wrap h1{margin:0 0 1.5rem;font-size:clamp(2.2rem,8vw,4rem)}
 .contact-email{display:inline-flex;align-items:center;justify-content:center;min-height:78px;min-width:min(100%,560px);padding:0.85rem 1.5rem;border-radius:16px;text-decoration:none;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.18)}
 .contact-email span{font-size:clamp(1.15rem,4.4vw,2rem);font-weight:700;color:var(--text);word-break:break-word}
+.contact-form{width:min(100%,760px);margin:0 auto;display:grid;gap:0.9rem}
+.contact-row{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem}
+.contact-input{width:100%;min-height:58px;padding:0.8rem 1rem;border-radius:14px;border:1px solid rgba(59,130,246,0.22);background:rgba(59,130,246,0.08);color:var(--text);font:inherit}
+.contact-input::placeholder{color:color-mix(in oklab, var(--muted) 90%, black 10%)}
+.contact-input:focus{outline:2px solid transparent;box-shadow:0 0 0 3px rgba(59,130,246,0.22)}
+.contact-textarea{min-height:130px;resize:vertical}
+.contact-submit{justify-self:end;min-height:44px;padding:0.6rem 1rem;border-radius:10px;border:1px solid rgba(124,58,237,0.35);background:rgba(124,58,237,0.12);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
+.contact-submit:hover{background:rgba(124,58,237,0.18)}
 .contact-note{margin:1rem 0 0;color:var(--muted);font-size:clamp(1rem,2.5vw,1.35rem)}
 
 .contact-divider{margin:2.2rem auto 1.5rem;display:flex;align-items:center;gap:1rem;justify-content:center;max-width:560px}
@@ -144,6 +152,8 @@ h1,h2,h3{font-weight:700}
 .contact-socials svg{width:24px;height:24px;fill:currentColor;display:block}
 
 :root[data-theme='dark'] .contact-email{background:rgba(59,130,246,0.16);border-color:rgba(96,165,250,0.32)}
+:root[data-theme='dark'] .contact-input{background:rgba(59,130,246,0.12);border-color:rgba(96,165,250,0.38)}
+:root[data-theme='dark'] .contact-input::placeholder{color:#9ca9c0}
 :root[data-theme='dark'] .contact-divider span{background:rgba(255,255,255,0.18)}
 :root[data-theme='dark'] .contact-socials a{background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.18);color:#b2b7c1}
 :root[data-theme='dark'] .contact-socials a:hover{background:rgba(124,58,237,0.16)}
@@ -217,6 +227,8 @@ h3{font-size:clamp(1rem,2.5vw,1.5rem)}
 	.footer-links div{grid-template-columns:repeat(2,minmax(0,1fr))}
 
 	.contact-email{min-height:66px;border-radius:14px;padding:0.75rem 1rem}
+	.contact-row{grid-template-columns:1fr}
+	.contact-submit{justify-self:stretch}
 	.contact-divider{margin:1.9rem auto 1.25rem}
 	.contact-socials a{width:44px;height:44px}
 }

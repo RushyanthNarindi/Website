@@ -6,9 +6,32 @@ export default function Contact(){
       <div className="container contact-wrap">
         <h1>Get in Touch</h1>
 
-        <a className="contact-email" href="mailto:rushyanthnarindi@gmail.com">
-          <span>rushyanthnarindi@gmail.com</span>
-        </a>
+        <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="contact-row">
+            <input
+              className="contact-input"
+              type="text"
+              name="name"
+              placeholder="Your name"
+              required
+            />
+            <input
+              className="contact-input"
+              type="email"
+              name="email"
+              placeholder="Your email"
+              required
+            />
+          </div>
+          <textarea
+            className="contact-input contact-textarea"
+            name="message"
+            placeholder="Your message"
+            rows={5}
+            required
+          />
+          <button className="contact-submit" type="submit">Send Message</button>
+        </form>
 
         <p className="contact-note">Usually respond within 24 hours</p>
 
