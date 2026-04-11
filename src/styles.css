@@ -42,6 +42,8 @@
 	position:relative;
 	width:250px;
 	height:58px;
+	--logo-bold-offset-x: 0.85px;
+	--logo-bold-offset-y: 0.25px;
 	background:var(--accent-1);
 	-webkit-mask-image:var(--logo-mask);
 	mask-image:var(--logo-mask);
@@ -68,7 +70,7 @@
 	-webkit-mask-size:contain;
 	mask-size:contain;
 	opacity:1;
-	transform:translateX(-0.35px);
+	transform:translate(calc(var(--logo-bold-offset-x) * -1), calc(var(--logo-bold-offset-y) * -1));
 }
 .logo-mark::after{
 	content:"";
@@ -84,7 +86,7 @@
 	-webkit-mask-size:contain;
 	mask-size:contain;
 	opacity:1;
-	transform:translateX(0.35px);
+	transform:translate(var(--logo-bold-offset-x), var(--logo-bold-offset-y));
 }
 .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.75rem}
 .nav a{text-decoration:none;color:var(--muted);padding:.4rem .6rem;border-radius:8px}
