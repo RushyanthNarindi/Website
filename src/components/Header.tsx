@@ -14,7 +14,7 @@ export default function Header(){
             aria-label="Rushyanth logo"
             className="logo-mark"
             role="img"
-            style={{ WebkitMaskImage: `url(${LogoAsset})`, maskImage: `url(${LogoAsset})` }}
+            style={{ '--logo-mask': `url(${LogoAsset})` } as React.CSSProperties}
           />
         </Link>
 
