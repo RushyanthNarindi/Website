@@ -10,8 +10,7 @@ export default function Header(){
     <header className="site-header">
       <div className="container header-row">
         <Link className="logo" to="/">
-          <img src={LogoSvg} alt="Logo" style={{ height: 32, verticalAlign: 'middle', marginRight: 8 }} />
-          <span className="logo-text">Rushyanth</span>
+          <img src={LogoSvg} alt="Logo" style={{ height: 32, verticalAlign: 'middle' }} />
         </Link>
 
         <nav className="nav" id="site-nav">
