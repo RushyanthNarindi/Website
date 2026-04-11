@@ -1,6 +1,8 @@
+
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../ThemeProvider'
+import LogoSvg from '../assets/images/WtxtBbg.svg'
 
 export default function Header(){
   const { theme, toggleTheme } = useTheme()
@@ -8,6 +10,7 @@ export default function Header(){
     <header className="site-header">
       <div className="container header-row">
         <Link className="logo" to="/">
+          <img src={LogoSvg} alt="Logo" style={{ height: 32, verticalAlign: 'middle', marginRight: 8 }} />
           <span className="logo-text">Rushyanth</span>
         </Link>
 
