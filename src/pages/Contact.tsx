@@ -1,12 +1,26 @@
 import React from 'react'
 
 export default function Contact(){
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>){
+    event.preventDefault()
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const name = String(formData.get('name') || '').trim()
+    const email = String(formData.get('email') || '').trim()
+    const message = String(formData.get('message') || '').trim()
+
+    const subject = encodeURIComponent(`Portfolio contact from ${name || 'Website visitor'}`)
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)
+    window.location.href = `mailto:rushyanthnarindi@gmail.com?subject=${subject}&body=${body}`
+  }
+
   return (
     <section className="contact-screen">
       <div className="container contact-wrap">
         <h1>Get in Touch</h1>
 
-        <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+        <form className="contact-form" onSubmit={handleSubmit}>
           <div className="contact-row">
             <input
               className="contact-input"
