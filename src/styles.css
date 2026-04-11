@@ -73,6 +73,29 @@
 /* small adjustments for light theme */
 :root[data-theme='light'] .site-header{border-bottom-color:rgba(0,0,0,0.06)}
 
+/* Global footer shown on all pages */
+.site-footer{margin-top:2rem;border-top:1px solid rgba(0,0,0,0.08);background:linear-gradient(180deg,rgba(124,58,237,0.03),rgba(124,58,237,0.01))}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:1.5rem;padding-top:1.25rem;padding-bottom:1.25rem}
+.footer-profile{display:flex;align-items:flex-start;gap:.9rem}
+.footer-profile h2{margin:0 0 .35rem;font-size:1.75rem}
+.footer-profile p{margin:0;color:var(--muted)}
+.footer-profile small{display:inline-block;margin-top:.85rem;color:var(--muted)}
+.avatar{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:var(--accent-1);color:#fff;font-weight:700;letter-spacing:.05em}
+
+.footer-links h3,.footer-social h3{text-transform:uppercase;letter-spacing:.1em;font-size:.95rem;color:var(--muted);margin:0 0 .65rem}
+.footer-links div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem .85rem}
+.footer-links a{text-decoration:none;color:var(--text);opacity:.9}
+.footer-links a:hover{color:var(--accent-1)}
+
+.social-row{display:flex;flex-wrap:wrap;gap:.55rem}
+.social-row a{width:42px;height:42px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;background:rgba(255,255,255,0.5);transition:all .15s}
+.social-row a:hover{color:var(--accent-1);border-color:rgba(124,58,237,0.35);background:rgba(124,58,237,0.07)}
+.social-row svg{width:22px;height:22px;fill:currentColor;display:block}
+
+:root[data-theme='dark'] .site-footer{border-top-color:rgba(255,255,255,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))}
+:root[data-theme='dark'] .social-row a{border-color:rgba(255,255,255,0.16);background:rgba(255,255,255,0.03)}
+:root[data-theme='dark'] .social-row a:hover{background:rgba(124,58,237,0.18)}
+
 .hero{padding:3rem 0}
 .content{padding:2rem 0}
 .btn{display:inline-block;font-weight:600}
@@ -164,6 +187,10 @@ h3{font-size:clamp(1rem,2.5vw,1.5rem)}
 
 	.stats-activity{padding:0.7rem}
 	.project-card{padding:0.9rem}
+
+	.footer-grid{grid-template-columns:1fr;gap:1.25rem}
+	.footer-profile h2{font-size:1.45rem}
+	.footer-links div{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 /* ---- Tablet (769px – 1024px) ---- */
