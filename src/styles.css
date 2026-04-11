@@ -68,7 +68,7 @@
 	-webkit-mask-size:contain;
 	mask-size:contain;
 	opacity:.9;
-	filter:blur(.4px);
+	filter:blur(.9px);
 }
 .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.75rem}
 .nav a{text-decoration:none;color:var(--muted);padding:.4rem .6rem;border-radius:8px}
