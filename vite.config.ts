@@ -1,8 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tsconfigPaths from 'vite-tsconfig-paths'
 
-export default defineConfig({
+import svgr from 'vite-plugin-svgr'
+
   base: '/Website/',  // Match your repo name (case-sensitive)
-  plugins: [react(), tsconfigPaths()],
+  plugins: [react(), tsconfigPaths(), svgr()],
 })
