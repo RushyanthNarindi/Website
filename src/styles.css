@@ -41,17 +41,15 @@
 	display:block;
 	width:250px;
 	height:58px;
-	background:var(--accent-1);
-	-webkit-mask-image:var(--logo-mask);
-	mask-image:var(--logo-mask);
-	-webkit-mask-repeat:no-repeat;
-	mask-repeat:no-repeat;
-	-webkit-mask-position:center;
-	mask-position:center;
-	-webkit-mask-size:contain;
-	mask-size:contain;
-	-webkit-mask-mode:luminance;
-	mask-mode:luminance;
+	color:var(--accent-1);
+	fill:currentColor;
+}
+.logo-mark path{
+	stroke:currentColor;
+	stroke-width:.7;
+	stroke-linecap:round;
+	stroke-linejoin:round;
+	paint-order:stroke fill;
 }
 .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.75rem}
 .nav a{text-decoration:none;color:var(--muted);padding:.4rem .6rem;border-radius:8px;font-weight:600}

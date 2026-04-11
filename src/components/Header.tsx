@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../ThemeProvider'
-import LogoAsset from '../assets/images/WtxtBbg.svg'
+import LogoSvg from '../assets/images/WtxtBbg.svg?react'
 
 export default function Header(){
   const { theme, toggleTheme } = useTheme()
@@ -10,12 +10,7 @@ export default function Header(){
     <header className="site-header">
       <div className="container header-row">
         <Link className="logo" to="/">
-          <span
-            aria-label="Rushyanth logo"
-            className="logo-mark"
-            role="img"
-            style={{ '--logo-mask': `url(${LogoAsset})` } as React.CSSProperties}
-          />
+          <LogoSvg aria-label="Rushyanth logo" className="logo-mark" role="img" />
         </Link>
 
         <nav className="nav" id="site-nav">
