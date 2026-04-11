@@ -59,7 +59,8 @@ export default function Stats(){
   useEffect(() => {
     fetch('/src/assets/data/profile.json')
       .then(res => res.ok ? res.json() : null)
-      .then(data => { if(data) setProfile(data); });
+      .then(data => { if(data) setProfile(data); })
+      .catch(() => { /* use default profile values on error */ });
   }, []);
 
   useEffect(() => {
