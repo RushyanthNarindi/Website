@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../ThemeProvider'
-import LogoSvg from '../assets/images/WtxtBbg.svg'
+import LogoSvg from '../assets/images/WtxtBbg.svg?react'
 
 export default function Header(){
   const { theme, toggleTheme } = useTheme()
@@ -10,7 +10,7 @@ export default function Header(){
     <header className="site-header">
       <div className="container header-row">
         <Link className="logo" to="/">
-          <img src={LogoSvg} alt="Logo" style={{ height: 32, verticalAlign: 'middle', marginRight: 8, color: '#7c3aed' }} />
+          <LogoSvg aria-label="Logo" style={{ height: 32, verticalAlign: 'middle', marginRight: 8 }} />
         </Link>
 
         <nav className="nav" id="site-nav">
