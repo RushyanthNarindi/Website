@@ -67,8 +67,24 @@
 	mask-position:center;
 	-webkit-mask-size:contain;
 	mask-size:contain;
-	opacity:.9;
-	filter:blur(.9px);
+	opacity:1;
+	transform:translateX(-0.35px);
+}
+.logo-mark::after{
+	content:"";
+	position:absolute;
+	inset:0;
+	background:var(--accent-1);
+	-webkit-mask-image:var(--logo-mask);
+	mask-image:var(--logo-mask);
+	-webkit-mask-repeat:no-repeat;
+	mask-repeat:no-repeat;
+	-webkit-mask-position:center;
+	mask-position:center;
+	-webkit-mask-size:contain;
+	mask-size:contain;
+	opacity:1;
+	transform:translateX(0.35px);
 }
 .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.75rem}
 .nav a{text-decoration:none;color:var(--muted);padding:.4rem .6rem;border-radius:8px}
