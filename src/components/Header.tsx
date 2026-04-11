@@ -25,11 +25,36 @@ export default function Header(){
         <div className="header-right">
           <nav className={`nav${navOpen ? ' nav-open' : ''}`} id="site-nav">
             <ul>
-              <li><Link to="/about" onClick={closeNav}>About</Link></li>
-              <li><Link to="/resume" onClick={closeNav}>Resume</Link></li>
-              <li><Link to="/writings/article-1" onClick={closeNav}>Writings</Link></li>
-              <li><Link to="/stats" onClick={closeNav}>Stats</Link></li>
-              <li><Link to="/contact" onClick={closeNav}>Contact</Link></li>
+              <li>
+                <Link to="/about" onClick={closeNav} className="nav-pill">
+                  <svg viewBox="0 0 24 24" aria-hidden><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/resume" onClick={closeNav} className="nav-pill">
+                  <svg viewBox="0 0 24 24" aria-hidden><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+                  Resume
+                </Link>
+              </li>
+              <li>
+                <Link to="/writings/article-1" onClick={closeNav} className="nav-pill">
+                  <svg viewBox="0 0 24 24" aria-hidden><path d="M3 18h12v-2H3v2zm0-5h12v-2H3v2zm0-7v2h12V6H3zm13 9.5v-9l6.75 4.5L16 19.5z"/></svg>
+                  Writings
+                </Link>
+              </li>
+              <li>
+                <Link to="/stats" onClick={closeNav} className="nav-pill">
+                  <svg viewBox="0 0 24 24" aria-hidden><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>
+                  Stats
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" onClick={closeNav} className="nav-pill">
+                  <svg viewBox="0 0 24 24" aria-hidden><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                  Contact
+                </Link>
+              </li>
             </ul>
           </nav>
 
