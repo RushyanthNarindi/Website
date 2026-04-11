@@ -140,6 +140,10 @@ h1,h2,h3{font-weight:700}
 .contact-textarea{min-height:130px;resize:vertical}
 .contact-submit{justify-self:end;min-height:44px;padding:0.6rem 1rem;border-radius:10px;border:1px solid rgba(124,58,237,0.35);background:rgba(124,58,237,0.12);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
 .contact-submit:hover{background:rgba(124,58,237,0.18)}
+.contact-submit:disabled{opacity:.65;cursor:not-allowed}
+.contact-status{margin:.25rem 0 0;text-align:left;font-size:.95rem}
+.contact-status.is-success{color:#15803d}
+.contact-status.is-error{color:#dc2626}
 .contact-note{margin:1rem 0 0;color:var(--muted);font-size:clamp(1rem,2.5vw,1.35rem)}
 
 .contact-divider{margin:2.2rem auto 1.5rem;display:flex;align-items:center;gap:1rem;justify-content:center;max-width:560px}
@@ -154,6 +158,8 @@ h1,h2,h3{font-weight:700}
 :root[data-theme='dark'] .contact-email{background:rgba(59,130,246,0.16);border-color:rgba(96,165,250,0.32)}
 :root[data-theme='dark'] .contact-input{background:rgba(59,130,246,0.12);border-color:rgba(96,165,250,0.38)}
 :root[data-theme='dark'] .contact-input::placeholder{color:#9ca9c0}
+:root[data-theme='dark'] .contact-status.is-success{color:#4ade80}
+:root[data-theme='dark'] .contact-status.is-error{color:#f87171}
 :root[data-theme='dark'] .contact-divider span{background:rgba(255,255,255,0.18)}
 :root[data-theme='dark'] .contact-socials a{background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.18);color:#b2b7c1}
 :root[data-theme='dark'] .contact-socials a:hover{background:rgba(124,58,237,0.16)}

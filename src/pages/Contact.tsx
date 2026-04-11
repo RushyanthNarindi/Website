@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function Contact(){
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>){
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitState, setSubmitState] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submitMessage, setSubmitMessage] = useState('')
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
     event.preventDefault()
 
     const form = event.currentTarget
@@ -9,10 +13,46 @@ export default function Contact(){
     const name = String(formData.get('name') || '').trim()
     const email = String(formData.get('email') || '').trim()
     const message = String(formData.get('message') || '').trim()
+    const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
 
-    const subject = encodeURIComponent(`Portfolio contact from ${name || 'Website visitor'}`)
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)
-    window.location.href = `mailto:rushyanthnarindi@gmail.com?subject=${subject}&body=${body}`
+    if(!endpoint){
+      setSubmitState('error')
+      setSubmitMessage('Contact form is not configured yet. Add VITE_FORMSPREE_ENDPOINT in your environment.')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitState('idle')
+    setSubmitMessage('')
+
+    try{
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _subject: `Portfolio contact from ${name || 'Website visitor'}`
+        })
+      })
+
+      if(!response.ok){
+        throw new Error(`Request failed with status ${response.status}`)
+      }
+
+      setSubmitState('success')
+      setSubmitMessage('Message sent successfully. Thank you!')
+      form.reset()
+    }catch(error){
+      setSubmitState('error')
+      setSubmitMessage('Could not send message. Please try again in a few minutes.')
+    }finally{
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -21,6 +61,7 @@ export default function Contact(){
         <h1>Get in Touch</h1>
 
         <form className="contact-form" onSubmit={handleSubmit}>
+          <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" style={{display:'none'}} />
           <div className="contact-row">
             <input
               className="contact-input"
@@ -44,7 +85,14 @@ export default function Contact(){
             rows={5}
             required
           />
-          <button className="contact-submit" type="submit">Send Message</button>
+          <button className="contact-submit" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+          </button>
+          {submitState !== 'idle' && (
+            <p className={`contact-status ${submitState === 'success' ? 'is-success' : 'is-error'}`} role="status" aria-live="polite">
+              {submitMessage}
+            </p>
+          )}
         </form>
 
         <p className="contact-note">Usually respond within 24 hours</p>
