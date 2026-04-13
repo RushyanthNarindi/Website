@@ -7,7 +7,7 @@ import About from './pages/About'
 import Resume from './pages/Resume'
 import Contact from './pages/Contact'
 import Stats from './pages/Stats'
-import Chatbot from './pages/Chatbot'
+import ChatWidget from './components/ChatWidget'
 
 function Writings(){
   return (
@@ -33,11 +33,11 @@ export default function App(){
           <Route path="/resume" element={<Resume />} />
           <Route path="/writings" element={<Writings />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/chat" element={<Chatbot />} />
           <Route path="/stats" element={<Stats />} />
         </Routes>
       </main>
       <Footer />
+      <ChatWidget />
     </div>
   )
 }

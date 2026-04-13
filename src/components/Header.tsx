@@ -44,12 +44,6 @@ export default function Header(){
                 </Link>
               </li>
               <li>
-                <Link to="/chat" onClick={closeNav} className="nav-pill">
-                  <svg viewBox="0 0 24 24" aria-hidden><path d="M4 4h16a2 2 0 012 2v9a2 2 0 01-2 2h-4.6l-2.8 3.2a1 1 0 01-1.52 0L8.2 17H4a2 2 0 01-2-2V6a2 2 0 012-2zm1 3v7h4a1 1 0 01.76.35L12 16.9l2.24-2.55A1 1 0 0115 14h4V7H5z"/></svg>
-                  AI Chat
-                </Link>
-              </li>
-              <li>
                 <Link to="/stats" onClick={closeNav} className="nav-pill">
                   <svg viewBox="0 0 24 24" aria-hidden><path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/></svg>
                   Stats
