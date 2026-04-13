@@ -1,7 +1,7 @@
-# My GitHub Pages Site
-Here is My WebSite https://rushyanthnarindi.github.io/Website/
+# Rushyanth Narindi Website
+Live site: https://rushyanthnarindi.com/
 
-This project is a simple website deployed using GitHub Pages. It includes various sections such as About, Resume, Writings, and Contact. The website is designed to showcase personal information and projects.
+This project is a personal website built with React, TypeScript, and Vite. The frontend is deployed on GitHub Pages using the custom domain `rushyanthnarindi.com`.
 
 
 ## Check List
@@ -29,8 +29,7 @@ This project is a simple website deployed using GitHub Pages. It includes variou
       - `main.js`: JavaScript code for interactivity.
 
 - `.github/`: Contains GitHub Actions workflows.
-  - `workflows/`: Directory for workflow files.
-    - `deploy.yml`: Workflow for deploying the website to GitHub Pages.
+  - `workflows/`: Directory containing the GitHub Pages deployment workflow.
 
 - `CNAME`: File for specifying a custom domain for the GitHub Pages site.
 
@@ -40,13 +39,21 @@ This project is a simple website deployed using GitHub Pages. It includes variou
 
 - `LICENSE`: Licensing information for the project.
 
-## Setup Instructions
+## Local Development
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
-3. Install dependencies using npm (if applicable).
-4. Modify the content in the `src/` directory as needed.
-5. Push changes to the repository to trigger deployment to GitHub Pages.
+3. Install dependencies with `npm install`.
+4. Start the development server with `npm run dev`.
+
+## Deployment
+
+1. Push changes to `main`.
+2. GitHub Actions runs the Pages workflow and builds the Vite app.
+3. The build output includes:
+  - `404.html` for client-side routing fallback on GitHub Pages
+  - `CNAME` for the custom domain `rushyanthnarindi.com`
+4. GitHub Pages serves the frontend from the custom domain.
 
 ## Production Contact Form (Long-Term)
 
@@ -73,7 +80,7 @@ Optional variables:
 2. Server validates payload and forwards to OpenAI Chat Completions API
 3. Server returns one assistant reply to render in the chat UI
 
-### Recommended host
+### Recommended API host
 
 - Vercel (serverless API route support out of the box)
 
@@ -100,12 +107,13 @@ Optional frontend variable:
 2. Create a sender address and use it in `PORTFOLIO_FROM_EMAIL`
 3. Set `PORTFOLIO_TO_EMAIL` to the inbox where you want messages
 4. Add env vars from `.env.example` in your deployment provider
-5. Deploy frontend + API on Vercel (recommended)
+5. Deploy the API on Vercel or another serverless host
 
 ### Hosting notes
 
 - GitHub Pages cannot run `api/contact.js` (static hosting only)
-- If you keep GitHub Pages for frontend, deploy API separately and set `VITE_CONTACT_API_URL` to the external API URL
+- The frontend is served from GitHub Pages on `rushyanthnarindi.com`
+- Deploy API routes separately and set `VITE_CONTACT_API_URL` and `VITE_CHAT_API_URL` to the external API URL when needed
 - Configure `CONTACT_ALLOWED_ORIGINS` when frontend and API are on different domains
 
 ## License

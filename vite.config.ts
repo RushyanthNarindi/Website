@@ -4,6 +4,6 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  base: '/Website/',  // Match your repo name (case-sensitive)
+  base: '/',
   plugins: [react(), tsconfigPaths(), svgr()],
 });
