@@ -35,6 +35,60 @@ function sanitizeHistory(value) {
     .slice(-12)
 }
 
+function sanitizePortfolioContext(value) {
+  if (!value || typeof value !== 'object') return null
+
+  const name = String(value.name || '').trim()
+  const headline = String(value.headline || '').trim()
+  const status = String(value.status || '').trim()
+  const about = String(value.about || '').trim()
+  const currentCity = String(value.currentCity || '').trim()
+  const age = Number.isFinite(Number(value.age)) ? Number(value.age) : null
+  const countriesVisited = Array.isArray(value.countriesVisited)
+    ? value.countriesVisited.map((item) => String(item).trim()).filter(Boolean).slice(0, 20)
+    : []
+  const skills = Array.isArray(value.skills)
+    ? value.skills.map((item) => String(item).trim()).filter(Boolean).slice(0, 40)
+    : []
+  const projects = Array.isArray(value.projects)
+    ? value.projects.map((item) => String(item).trim()).filter(Boolean).slice(0, 20)
+    : []
+  const writingFocus = Array.isArray(value.writingFocus)
+    ? value.writingFocus.map((item) => String(item).trim()).filter(Boolean).slice(0, 20)
+    : []
+
+  const github = value.github && typeof value.github === 'object'
+    ? {
+        username: String(value.github.username || '').trim(),
+        profile: String(value.github.profile || '').trim()
+      }
+    : null
+
+  const contact = value.contact && typeof value.contact === 'object'
+    ? {
+        note: String(value.contact.note || '').trim(),
+        channels: Array.isArray(value.contact.channels)
+          ? value.contact.channels.map((item) => String(item).trim()).filter(Boolean).slice(0, 20)
+          : []
+      }
+    : null
+
+  return {
+    name,
+    headline,
+    status,
+    about,
+    age,
+    currentCity,
+    countriesVisited,
+    skills,
+    projects,
+    writingFocus,
+    github,
+    contact
+  }
+}
+
 export default async function handler(req, res) {
   setCorsHeaders(req, res)
 
@@ -49,7 +103,7 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.OPENAI_API_KEY || process.env.AI_API_KEY
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini'
-  const systemPrompt = process.env.OPENAI_SYSTEM_PROMPT || 'You are a helpful AI assistant on a personal portfolio website. Keep answers concise, practical, and friendly.'
+  const systemPrompt = process.env.OPENAI_SYSTEM_PROMPT || 'You are a helpful AI assistant for Rushyanth Narindi\'s personal portfolio website. Priority order: (1) answer from provided portfolio/work context first, (2) then answer general internet-level knowledge clearly and practically. If a request appears outside Rushyanth\'s listed scope, explicitly suggest that the user reach out via the Contact page for custom help. If real-time browsing data is required and unavailable, say so briefly and provide best-effort guidance.'
 
   if (!apiKey) {
     return res.status(500).json({ error: 'Server AI configuration is incomplete' })
@@ -57,6 +111,7 @@ export default async function handler(req, res) {
 
   const message = String(req.body?.message || '').trim()
   const history = sanitizeHistory(req.body?.history)
+  const portfolioContext = sanitizePortfolioContext(req.body?.portfolioContext)
 
   if (!message) {
     return badRequest(res, 'Message is required')
@@ -67,9 +122,10 @@ export default async function handler(req, res) {
 
   const messages = [
     { role: 'system', content: systemPrompt },
+    portfolioContext ? { role: 'system', content: `Portfolio context: ${JSON.stringify(portfolioContext)}` } : null,
     ...history,
     { role: 'user', content: message }
-  ]
+  ].filter(Boolean)
 
   try {
     const aiResponse = await fetch(OPENAI_CHAT_COMPLETIONS_URL, {

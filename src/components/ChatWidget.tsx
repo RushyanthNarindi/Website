@@ -7,6 +7,76 @@ type ChatMessage = {
   content: string
 }
 
+const portfolioContext = {
+  name: 'Rushyanth Narindi',
+  headline: 'I build things on the web.',
+  status: 'Portfolio website under construction with ongoing updates.',
+  about:
+    'Technology-focused professional with a passion for IT, practical problem solving, and building useful web and automation solutions.',
+  currentCity: 'Dallas, TX',
+  age: 26,
+  countriesVisited: ['USA', 'India', 'Abu Dhabi'],
+  skills: ['React', 'TypeScript', 'Vite', 'Python', 'SQL', 'Pandas', 'Git', 'Shell Scripting'],
+  projects: ['Personal Portfolio Website', 'Data and Automation Toolkit'],
+  writingFocus: ['Technical write-ups', 'Case studies', 'Computing trends'],
+  github: {
+    username: 'RushyanthNarindi',
+    profile: 'https://github.com/RushyanthNarindi'
+  },
+  contact: {
+    note: 'Usually responds within 24 hours.',
+    channels: ['Contact page form', 'GitHub profile', 'Email']
+  }
+}
+
+const scopeKnowledge: Array<{ tags: string[]; answer: string }> = [
+  {
+    tags: ['name', 'who are you', 'who is rushyanth'],
+    answer: `${portfolioContext.name} is the owner of this portfolio website.`
+  },
+  {
+    tags: ['what do you do', 'work', 'scope', 'services', 'offer'],
+    answer:
+      'Rushyanth focuses on web development, portfolio/product UI work, and data/automation workflows using tools like React, TypeScript, Python, SQL, and scripting.'
+  },
+  {
+    tags: ['about', 'background', 'experience', 'it'],
+    answer: portfolioContext.about
+  },
+  {
+    tags: ['age', 'old'],
+    answer: `Rushyanth is ${portfolioContext.age} years old.`
+  },
+  {
+    tags: ['city', 'location', 'live', 'based'],
+    answer: `${portfolioContext.name} is currently based in ${portfolioContext.currentCity}.`
+  },
+  {
+    tags: ['country', 'travel', 'visited'],
+    answer: `Countries visited include ${portfolioContext.countriesVisited.join(', ')}.`
+  },
+  {
+    tags: ['skill', 'tech stack', 'technology', 'tools'],
+    answer: `Core skills include ${portfolioContext.skills.join(', ')}.`
+  },
+  {
+    tags: ['project', 'built', 'portfolio website', 'automation toolkit'],
+    answer: `Highlighted projects include ${portfolioContext.projects.join(' and ')}.`
+  },
+  {
+    tags: ['writing', 'blog', 'article'],
+    answer: `Writings focus includes ${portfolioContext.writingFocus.join(', ')}.`
+  },
+  {
+    tags: ['github', 'repo', 'repository'],
+    answer: `GitHub username is ${portfolioContext.github.username}. Profile: ${portfolioContext.github.profile}`
+  },
+  {
+    tags: ['contact', 'email', 'reach out', 'hire', 'message'],
+    answer: 'Use the Contact page form to reach Rushyanth directly. Response time is usually within 24 hours.'
+  }
+]
+
 const starterMessage: ChatMessage = {
   role: 'assistant',
   content: 'Hi, I am your portfolio AI assistant. Ask me anything.'
@@ -15,27 +85,47 @@ const starterMessage: ChatMessage = {
 function buildLocalFallbackReply(prompt: string): string {
   const text = prompt.toLowerCase()
 
-  if (text.includes('age') || text.includes('old')) {
-    return 'Rushyanth is 26 years old.'
-  }
+  const matched = scopeKnowledge.find((item) =>
+    item.tags.some((tag) => text.includes(tag))
+  )
 
-  if (text.includes('city') || text.includes('live') || text.includes('location')) {
-    return 'Rushyanth is currently based in Dallas, TX.'
-  }
-
-  if (text.includes('country') || text.includes('travel') || text.includes('visited')) {
-    return 'Countries visited include USA, India, and Abu Dhabi.'
-  }
-
-  if (text.includes('contact') || text.includes('email')) {
-    return 'You can use the Contact page on this website to reach Rushyanth.'
-  }
-
-  if (text.includes('resume') || text.includes('experience') || text.includes('skills')) {
-    return 'Please check the Resume and About pages for experience, projects, and skills.'
-  }
+  if (matched) return matched.answer
 
   return 'I am running in local assistant mode right now. Ask me about profile basics like location, age, countries visited, projects, and contact info.'
+}
+
+function buildScopeFirstReply(prompt: string): string | null {
+  const reply = buildLocalFallbackReply(prompt)
+  if (reply.includes('local assistant mode')) return null
+  return reply
+}
+
+function buildReachOutSuggestion(): string {
+  return 'This may be outside the current published scope of Rushyanth\'s listed work. Please use the Contact page to discuss your specific need directly.'
+}
+
+async function buildWebFallbackReply(prompt: string): Promise<string | null> {
+  const query = prompt.trim()
+  if (!query) return null
+
+  try {
+    const ddgUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`
+    const response = await fetch(ddgUrl)
+    if (!response.ok) return null
+
+    const data = await response.json()
+    const direct = String(data?.Answer || data?.AbstractText || '').trim()
+    if (direct) return direct
+
+    const topic = data?.RelatedTopics?.find?.((item: { Text?: string }) => item?.Text)?.Text
+    if (typeof topic === 'string' && topic.trim()) {
+      return topic.trim()
+    }
+  } catch {
+    return null
+  }
+
+  return null
 }
 
 export default function ChatWidget() {
@@ -168,7 +258,8 @@ export default function ChatWidget() {
         },
         body: JSON.stringify({
           message: value,
-          history
+          history,
+          portfolioContext
         })
       })
 
@@ -178,11 +269,20 @@ export default function ChatWidget() {
         const usingRelativeEndpoint = endpoint.startsWith('/')
 
         if (usingRelativeEndpoint && (status === 404 || status === 405)) {
+          const scopeReply = buildScopeFirstReply(value)
+          const webReply = scopeReply ? null : await buildWebFallbackReply(value)
+          const finalReply = scopeReply || webReply || buildReachOutSuggestion()
+
           setMessages((current) => [
             ...current,
-            { role: 'assistant', content: buildLocalFallbackReply(value) }
+            {
+              role: 'assistant',
+              content: scopeReply
+                ? finalReply
+                : `${finalReply}\n\n${buildReachOutSuggestion()}`
+            }
           ])
-          setNotice('Live AI backend is not connected on this host. Showing local assistant replies.')
+          setNotice('Live AI backend is not connected on this host. Showing scope-first fallback replies.')
           return
         }
 
@@ -200,11 +300,20 @@ export default function ChatWidget() {
       setMessages((current) => [...current, { role: 'assistant', content: reply }])
     } catch (sendError) {
       if (endpoint.startsWith('/')) {
+        const scopeReply = buildScopeFirstReply(value)
+        const webReply = scopeReply ? null : await buildWebFallbackReply(value)
+        const finalReply = scopeReply || webReply || buildReachOutSuggestion()
+
         setMessages((current) => [
           ...current,
-          { role: 'assistant', content: buildLocalFallbackReply(value) }
+          {
+            role: 'assistant',
+            content: scopeReply
+              ? finalReply
+              : `${finalReply}\n\n${buildReachOutSuggestion()}`
+          }
         ])
-        setNotice('Live AI backend is unreachable. Showing local assistant replies.')
+        setNotice('Live AI backend is unreachable. Showing scope-first fallback replies.')
         return
       }
 
