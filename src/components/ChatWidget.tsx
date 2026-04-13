@@ -14,10 +14,18 @@ const starterMessage: ChatMessage = {
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
+  const [position, setPosition] = useState({ x: 16, y: 16 })
+  const [dragState, setDragState] = useState<{
+    pointerId: number
+    offsetX: number
+    offsetY: number
+  } | null>(null)
   const [messages, setMessages] = useState<ChatMessage[]>([starterMessage])
   const [input, setInput] = useState('')
   const [isSending, setIsSending] = useState(false)
   const [error, setError] = useState('')
+  const widgetRef = useRef<HTMLDivElement | null>(null)
+  const draggedRef = useRef(false)
   const messagesRef = useRef<HTMLDivElement | null>(null)
 
   const endpoint = import.meta.env.VITE_CHAT_API_URL || '/api/chat'
@@ -31,6 +39,84 @@ export default function ChatWidget() {
     if (!messagesRef.current) return
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight
   }, [messages, isSending])
+
+  useEffect(() => {
+    const widget = widgetRef.current
+    if (!widget) return
+
+    const margin = 16
+    const nextX = Math.max(margin, window.innerWidth - widget.offsetWidth - margin)
+    const nextY = Math.max(margin, window.innerHeight - widget.offsetHeight - margin)
+    setPosition({ x: nextX, y: nextY })
+  }, [])
+
+  useEffect(() => {
+    const widget = widgetRef.current
+    if (!widget) return
+
+    const margin = 10
+    const maxX = Math.max(margin, window.innerWidth - widget.offsetWidth - margin)
+    const maxY = Math.max(margin, window.innerHeight - widget.offsetHeight - margin)
+
+    setPosition((current) => ({
+      x: Math.min(Math.max(current.x, margin), maxX),
+      y: Math.min(Math.max(current.y, margin), maxY)
+    }))
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!dragState) return
+    const activeDrag = dragState
+
+    function handlePointerMove(event: PointerEvent) {
+      if (event.pointerId !== activeDrag.pointerId || !widgetRef.current) return
+
+      const margin = 10
+      const nextX = event.clientX - activeDrag.offsetX
+      const nextY = event.clientY - activeDrag.offsetY
+      const maxX = Math.max(margin, window.innerWidth - widgetRef.current.offsetWidth - margin)
+      const maxY = Math.max(margin, window.innerHeight - widgetRef.current.offsetHeight - margin)
+
+      draggedRef.current = true
+      setPosition({
+        x: Math.min(Math.max(nextX, margin), maxX),
+        y: Math.min(Math.max(nextY, margin), maxY)
+      })
+    }
+
+    function handlePointerUp(event: PointerEvent) {
+      if (event.pointerId !== activeDrag.pointerId) return
+      setDragState(null)
+      window.setTimeout(() => {
+        draggedRef.current = false
+      }, 0)
+    }
+
+    window.addEventListener('pointermove', handlePointerMove)
+    window.addEventListener('pointerup', handlePointerUp)
+
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove)
+      window.removeEventListener('pointerup', handlePointerUp)
+    }
+  }, [dragState])
+
+  function startDrag(event: React.PointerEvent<HTMLElement>) {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+    if (!widgetRef.current) return
+
+    const rect = widgetRef.current.getBoundingClientRect()
+    setDragState({
+      pointerId: event.pointerId,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top
+    })
+  }
+
+  function toggleWidget() {
+    if (draggedRef.current) return
+    setIsOpen((current) => !current)
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -81,11 +167,22 @@ export default function ChatWidget() {
   }
 
   return (
-    <div className="chat-widget-shell">
+    <div
+      ref={widgetRef}
+      className="chat-widget-shell"
+      style={{ left: `${position.x}px`, top: `${position.y}px` }}
+    >
       {isOpen && (
         <section id="chat-widget-panel" className="chat-widget-panel" aria-label="AI chat assistant">
-          <header className="chat-widget-header">
-            <h2>AI Chat</h2>
+          <header className="chat-widget-header chat-widget-drag-handle" onPointerDown={startDrag}>
+            <h2>
+              <span className="chat-widget-avatar" aria-hidden>
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 3h6v2h2a3 3 0 013 3v6a3 3 0 01-3 3h-2v2h-6v-2H7a3 3 0 01-3-3V8a3 3 0 013-3h2V3zm-2 4a1 1 0 00-1 1v6a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1H7zm2 3a1 1 0 100 2 1 1 0 000-2zm6 0a1 1 0 100 2 1 1 0 000-2z" />
+                </svg>
+              </span>
+              AI Chat
+            </h2>
             <button
               type="button"
               className="chat-widget-close"
@@ -140,11 +237,17 @@ export default function ChatWidget() {
 
       <button
         type="button"
-        className="chat-widget-trigger"
-        onClick={() => setIsOpen((current) => !current)}
+        className="chat-widget-trigger chat-widget-drag-handle"
+        onPointerDown={startDrag}
+        onClick={toggleWidget}
         aria-expanded={isOpen}
         aria-controls="chat-widget-panel"
       >
+        <span className="chat-widget-avatar" aria-hidden>
+          <svg viewBox="0 0 24 24">
+            <path d="M9 3h6v2h2a3 3 0 013 3v6a3 3 0 01-3 3h-2v2h-6v-2H7a3 3 0 01-3-3V8a3 3 0 013-3h2V3zm-2 4a1 1 0 00-1 1v6a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1H7zm2 3a1 1 0 100 2 1 1 0 000-2zm6 0a1 1 0 100 2 1 1 0 000-2z" />
+          </svg>
+        </span>
         {isOpen ? 'Close Chat' : 'AI Chat'}
       </button>
     </div>
