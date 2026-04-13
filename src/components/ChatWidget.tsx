@@ -95,6 +95,41 @@ function buildCapabilitiesReply(): string {
   return `I can help with:\n- ${assistantCapabilities.join('\n- ')}\n\nI focus on Rushyanth-specific questions. For anything outside that scope, please reach out through the Contact page.`
 }
 
+function tryGreeting(prompt: string): string | null {
+  const text = prompt.toLowerCase().trim()
+  const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening']
+  const thanks = ['thanks', 'thank you', 'thx']
+
+  if (greetings.includes(text)) {
+    return 'Hello. I am RN AI Chat Bot. I can explain Rushyanth\'s profile, projects, skills, and contact options. You can also ask What can you do?'
+  }
+
+  if (thanks.includes(text)) {
+    return 'You are welcome. If you want, ask about Rushyanth\'s projects, skills, writings, stats, or contact info.'
+  }
+
+  return null
+}
+
+function tryDirectArithmetic(prompt: string): string | null {
+  const expression = prompt.trim()
+  if (!expression) return null
+
+  if (!/^[0-9+\-*/().%\s]+$/.test(expression)) return null
+  if (!/[+\-*/%]/.test(expression)) return null
+  if (expression.length > 80) return 'Please keep arithmetic expressions short.'
+
+  try {
+    const result = Function(`"use strict"; return (${expression});`)()
+    if (typeof result !== 'number' || !Number.isFinite(result)) {
+      return 'I could not compute that expression safely.'
+    }
+    return `Result: ${result}`
+  } catch {
+    return 'That arithmetic expression looks invalid. Please try again.'
+  }
+}
+
 function tryCalculate(prompt: string): string | null {
   const lower = prompt.toLowerCase()
   if (!lower.startsWith('calculate ')) return null
@@ -152,7 +187,13 @@ function tryLocalCapabilityReply(prompt: string): string | null {
     return buildCapabilitiesReply()
   }
 
-  return tryCalculate(prompt) || trySummarize(prompt) || tryRewrite(prompt)
+  return (
+    tryGreeting(prompt) ||
+    tryDirectArithmetic(prompt) ||
+    tryCalculate(prompt) ||
+    trySummarize(prompt) ||
+    tryRewrite(prompt)
+  )
 }
 
 function buildLocalFallbackReply(prompt: string): string {
