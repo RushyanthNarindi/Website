@@ -52,6 +52,27 @@ This project is a simple website deployed using GitHub Pages. It includes variou
 
 This project now supports a server-side contact endpoint at `api/contact.js` for production-grade email delivery.
 
+## AI Chatbot Setup
+
+This project now supports a server-side AI chatbot endpoint at `api/chat.js`.
+
+### Required environment variables
+
+- `OPENAI_API_KEY`
+
+Optional variables:
+
+- `OPENAI_MODEL` (default: `gpt-4o-mini`)
+- `OPENAI_SYSTEM_PROMPT` (custom assistant instructions)
+- `VITE_CHAT_API_URL` (if frontend and API are hosted separately)
+- `AI_ALLOWED_ORIGINS` (optional comma-separated browser origin allow-list)
+
+### How it works
+
+1. Frontend chat UI sends the current message and recent history to `/api/chat`
+2. Server validates payload and forwards to OpenAI Chat Completions API
+3. Server returns one assistant reply to render in the chat UI
+
 ### Recommended host
 
 - Vercel (serverless API route support out of the box)

@@ -164,6 +164,31 @@ h1,h2,h3{font-weight:700}
 :root[data-theme='dark'] .contact-socials a{background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.18);color:#b2b7c1}
 :root[data-theme='dark'] .contact-socials a:hover{background:rgba(124,58,237,0.16)}
 
+/* Chatbot page */
+.chatbot-screen{padding:clamp(1.8rem,6vw,4rem) 0}
+.chatbot-wrap{max-width:860px;display:grid;gap:1rem}
+.chatbot-wrap h1{margin:0}
+.chatbot-subtitle{margin:0;color:var(--muted)}
+.chatbot-messages{display:grid;gap:0.8rem;max-height:58vh;overflow:auto;padding:0.9rem;border:1px solid rgba(0,0,0,0.1);border-radius:14px;background:rgba(124,58,237,0.03)}
+.chatbot-message{max-width:min(78ch,100%);padding:0.75rem 0.9rem;border-radius:12px;border:1px solid rgba(0,0,0,0.08);background:#fff}
+.chatbot-message-role{margin:0 0 0.35rem;font-size:0.82rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.chatbot-message-text{margin:0;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.chatbot-message.is-user{justify-self:end;background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.28)}
+.chatbot-message.is-assistant{justify-self:start}
+.chatbot-form{display:grid;gap:0.7rem}
+.chatbot-input{width:100%;resize:vertical;min-height:92px;padding:0.85rem 1rem;border-radius:12px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.08);color:var(--text);font:inherit}
+.chatbot-input:focus{outline:2px solid transparent;box-shadow:0 0 0 3px rgba(59,130,246,0.22)}
+.chatbot-submit{justify-self:end;min-height:42px;padding:0.5rem 1rem;border-radius:10px;border:1px solid rgba(124,58,237,0.35);background:rgba(124,58,237,0.12);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
+.chatbot-submit:hover{background:rgba(124,58,237,0.18)}
+.chatbot-submit:disabled{opacity:.65;cursor:not-allowed}
+.chatbot-error{margin:0;color:#dc2626;font-weight:600}
+
+:root[data-theme='dark'] .chatbot-messages{border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.04)}
+:root[data-theme='dark'] .chatbot-message{background:rgba(255,255,255,0.02);border-color:rgba(255,255,255,0.14)}
+:root[data-theme='dark'] .chatbot-message.is-user{background:rgba(59,130,246,0.16);border-color:rgba(96,165,250,0.35)}
+:root[data-theme='dark'] .chatbot-input{background:rgba(59,130,246,0.12);border-color:rgba(96,165,250,0.35)}
+:root[data-theme='dark'] .chatbot-error{color:#f87171}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -237,6 +262,9 @@ h3{font-size:clamp(1rem,2.5vw,1.5rem)}
 	.contact-submit{justify-self:stretch}
 	.contact-divider{margin:1.9rem auto 1.25rem}
 	.contact-socials a{width:44px;height:44px}
+	.chatbot-messages{max-height:52vh;padding:0.7rem}
+	.chatbot-message{max-width:100%}
+	.chatbot-submit{justify-self:stretch}
 }
 
 /* ---- Tablet (769px – 1024px) ---- */
