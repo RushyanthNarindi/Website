@@ -74,6 +74,18 @@ Optional variables:
 - `VITE_CHAT_API_URL` (if frontend and API are hosted separately)
 - `AI_ALLOWED_ORIGINS` (optional comma-separated browser origin allow-list)
 
+### GitHub Pages + external AI API (required for live AI)
+
+When frontend is hosted on GitHub Pages, `/api/chat` cannot run there. Deploy `api/chat.js` to Vercel (or another serverless host), then set:
+
+1. Repository secret `VITE_CHAT_API_URL` = your deployed endpoint (example: `https://your-api.vercel.app/api/chat`)
+2. In API host env vars, set `OPENAI_API_KEY`
+3. In API host env vars, set `AI_ALLOWED_ORIGINS` to include:
+  - `https://rushyanthnarindi.com`
+  - `https://www.rushyanthnarindi.com`
+
+The GitHub Actions Pages workflow reads this secret at build time and injects the live API URL into the frontend.
+
 ### How it works
 
 1. Frontend chat UI sends the current message and recent history to `/api/chat`
