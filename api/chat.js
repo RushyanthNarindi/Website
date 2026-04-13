@@ -89,6 +89,11 @@ function sanitizePortfolioContext(value) {
   }
 }
 
+function sanitizeCapabilities(value) {
+  if (!Array.isArray(value)) return []
+  return value.map((item) => String(item).trim()).filter(Boolean).slice(0, 30)
+}
+
 export default async function handler(req, res) {
   setCorsHeaders(req, res)
 
@@ -103,7 +108,7 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.OPENAI_API_KEY || process.env.AI_API_KEY
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini'
-  const systemPrompt = process.env.OPENAI_SYSTEM_PROMPT || 'You are a helpful AI assistant for Rushyanth Narindi\'s personal portfolio website. Priority order: (1) answer from provided portfolio/work context first, (2) then answer general internet-level knowledge clearly and practically. If a request appears outside Rushyanth\'s listed scope, explicitly suggest that the user reach out via the Contact page for custom help. If real-time browsing data is required and unavailable, say so briefly and provide best-effort guidance.'
+  const systemPrompt = process.env.OPENAI_SYSTEM_PROMPT || 'You are a helpful AI assistant for Rushyanth Narindi\'s personal portfolio website. Priority order: (1) answer from provided portfolio/work context first, (2) then answer general knowledge clearly and practically, (3) if outside listed scope, suggest reaching out via the Contact page. If real-time browsing data is required and unavailable, say so briefly and provide best-effort guidance. Keep responses concise and useful.'
 
   if (!apiKey) {
     return res.status(500).json({ error: 'Server AI configuration is incomplete' })
@@ -112,6 +117,7 @@ export default async function handler(req, res) {
   const message = String(req.body?.message || '').trim()
   const history = sanitizeHistory(req.body?.history)
   const portfolioContext = sanitizePortfolioContext(req.body?.portfolioContext)
+  const capabilities = sanitizeCapabilities(req.body?.assistantCapabilities)
 
   if (!message) {
     return badRequest(res, 'Message is required')
@@ -123,6 +129,7 @@ export default async function handler(req, res) {
   const messages = [
     { role: 'system', content: systemPrompt },
     portfolioContext ? { role: 'system', content: `Portfolio context: ${JSON.stringify(portfolioContext)}` } : null,
+    capabilities.length > 0 ? { role: 'system', content: `Assistant capabilities: ${capabilities.join('; ')}` } : null,
     ...history,
     { role: 'user', content: message }
   ].filter(Boolean)

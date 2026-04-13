@@ -7,6 +7,15 @@ type ChatMessage = {
   content: string
 }
 
+const assistantCapabilities = [
+  'Portfolio Q&A across all pages (scope-first)',
+  'General knowledge fallback when backend is unavailable',
+  'Out-of-scope guidance with Contact page suggestion',
+  'Quick math with prompts like: calculate 25 * (14 + 6)',
+  'Short summarization with prompts like: summarize: <text>',
+  'Text rewriting with prompts like: rewrite professionally: <text>'
+]
+
 const portfolioContext = {
   name: 'Rushyanth Narindi',
   headline: 'I build things on the web.',
@@ -79,7 +88,71 @@ const scopeKnowledge: Array<{ tags: string[]; answer: string }> = [
 
 const starterMessage: ChatMessage = {
   role: 'assistant',
-  content: 'Hi, I am your portfolio AI assistant. Ask me anything.'
+  content: 'Hi, I am your portfolio AI assistant. Ask me anything, or ask What can you do? to see my capabilities.'
+}
+
+function buildCapabilitiesReply(): string {
+  return `I can help with:\n- ${assistantCapabilities.join('\n- ')}`
+}
+
+function tryCalculate(prompt: string): string | null {
+  const lower = prompt.toLowerCase()
+  if (!lower.startsWith('calculate ')) return null
+
+  const expression = prompt.slice(10).trim()
+  if (!expression) return 'Please provide an expression, for example: calculate 12 * (4 + 3).'
+  if (!/^[0-9+\-*/().%\s]+$/.test(expression)) {
+    return 'I can only calculate basic arithmetic expressions using numbers and + - * / % ( ).'
+  }
+
+  try {
+    const result = Function(`"use strict"; return (${expression});`)()
+    if (typeof result !== 'number' || !Number.isFinite(result)) {
+      return 'I could not compute that expression safely.'
+    }
+    return `Result: ${result}`
+  } catch {
+    return 'That expression looks invalid. Please try a valid arithmetic expression.'
+  }
+}
+
+function trySummarize(prompt: string): string | null {
+  const lower = prompt.toLowerCase()
+  const marker = lower.startsWith('summarize:') || lower.startsWith('summarise:')
+  if (!marker) return null
+
+  const text = prompt.split(':').slice(1).join(':').trim()
+  if (!text) return 'Please provide text after summarize: so I can create a short summary.'
+
+  const compact = text.replace(/\s+/g, ' ').trim()
+  if (compact.length <= 180) return `Summary: ${compact}`
+  return `Summary: ${compact.slice(0, 180).trimEnd()}...`
+}
+
+function tryRewrite(prompt: string): string | null {
+  const lower = prompt.toLowerCase()
+  const marker = lower.startsWith('rewrite professionally:')
+  if (!marker) return null
+
+  const text = prompt.split(':').slice(1).join(':').trim()
+  if (!text) return 'Please provide text after rewrite professionally: so I can rewrite it.'
+
+  return `Professional rewrite:\n${text.charAt(0).toUpperCase()}${text.slice(1).replace(/\s+/g, ' ').trim()}`
+}
+
+function tryLocalCapabilityReply(prompt: string): string | null {
+  const text = prompt.toLowerCase().trim()
+
+  if (
+    text.includes('what can you do') ||
+    text.includes('capabilities') ||
+    text === 'help' ||
+    text === 'ai help'
+  ) {
+    return buildCapabilitiesReply()
+  }
+
+  return tryCalculate(prompt) || trySummarize(prompt) || tryRewrite(prompt)
 }
 
 function buildLocalFallbackReply(prompt: string): string {
@@ -247,6 +320,14 @@ export default function ChatWidget() {
     setInput('')
     setError('')
     setNotice('')
+
+    const localCapabilityReply = tryLocalCapabilityReply(value)
+    if (localCapabilityReply) {
+      setMessages((current) => [...current, { role: 'assistant', content: localCapabilityReply }])
+      setNotice('Handled with built-in assistant capabilities.')
+      return
+    }
+
     setIsSending(true)
 
     try {
@@ -259,7 +340,8 @@ export default function ChatWidget() {
         body: JSON.stringify({
           message: value,
           history,
-          portfolioContext
+          portfolioContext,
+          assistantCapabilities
         })
       })
 
