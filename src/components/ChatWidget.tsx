@@ -9,7 +9,7 @@ type ChatMessage = {
 
 const assistantCapabilities = [
   'Portfolio Q&A across all pages (scope-first)',
-  'General knowledge fallback when backend is unavailable',
+  'Detailed personal/professional profile answers about Rushyanth',
   'Out-of-scope guidance with Contact page suggestion',
   'Quick math with prompts like: calculate 25 * (14 + 6)',
   'Short summarization with prompts like: summarize: <text>',
@@ -88,11 +88,11 @@ const scopeKnowledge: Array<{ tags: string[]; answer: string }> = [
 
 const starterMessage: ChatMessage = {
   role: 'assistant',
-  content: 'Hi, I am your portfolio AI assistant. Ask me anything, or ask What can you do? to see my capabilities.'
+  content: 'Hi, I am RN AI Chat Bot. I am here to answer questions about Rushyanth. Ask What can you do? to see my capabilities.'
 }
 
 function buildCapabilitiesReply(): string {
-  return `I can help with:\n- ${assistantCapabilities.join('\n- ')}`
+  return `I can help with:\n- ${assistantCapabilities.join('\n- ')}\n\nI focus on Rushyanth-specific questions. For anything outside that scope, please reach out through the Contact page.`
 }
 
 function tryCalculate(prompt: string): string | null {
@@ -164,41 +164,17 @@ function buildLocalFallbackReply(prompt: string): string {
 
   if (matched) return matched.answer
 
-  return 'I am running in local assistant mode right now. Ask me about profile basics like location, age, countries visited, projects, and contact info.'
+  return 'I focus on Rushyanth-specific questions only. Please ask about profile, projects, skills, writings, stats, GitHub, or contact details.'
 }
 
 function buildScopeFirstReply(prompt: string): string | null {
   const reply = buildLocalFallbackReply(prompt)
-  if (reply.includes('local assistant mode')) return null
+  if (reply.includes('Rushyanth-specific questions only')) return null
   return reply
 }
 
 function buildReachOutSuggestion(): string {
-  return 'This may be outside the current published scope of Rushyanth\'s listed work. Please use the Contact page to discuss your specific need directly.'
-}
-
-async function buildWebFallbackReply(prompt: string): Promise<string | null> {
-  const query = prompt.trim()
-  if (!query) return null
-
-  try {
-    const ddgUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`
-    const response = await fetch(ddgUrl)
-    if (!response.ok) return null
-
-    const data = await response.json()
-    const direct = String(data?.Answer || data?.AbstractText || '').trim()
-    if (direct) return direct
-
-    const topic = data?.RelatedTopics?.find?.((item: { Text?: string }) => item?.Text)?.Text
-    if (typeof topic === 'string' && topic.trim()) {
-      return topic.trim()
-    }
-  } catch {
-    return null
-  }
-
-  return null
+  return 'That request appears outside Rushyanth\'s published scope. Please use the Contact page to discuss it directly with Rushyanth.'
 }
 
 export default function ChatWidget() {
@@ -352,19 +328,16 @@ export default function ChatWidget() {
 
         if (usingRelativeEndpoint && (status === 404 || status === 405)) {
           const scopeReply = buildScopeFirstReply(value)
-          const webReply = scopeReply ? null : await buildWebFallbackReply(value)
-          const finalReply = scopeReply || webReply || buildReachOutSuggestion()
+          const finalReply = scopeReply || buildReachOutSuggestion()
 
           setMessages((current) => [
             ...current,
             {
               role: 'assistant',
-              content: scopeReply
-                ? finalReply
-                : `${finalReply}\n\n${buildReachOutSuggestion()}`
+              content: finalReply
             }
           ])
-          setNotice('Live AI backend is not connected on this host. Showing scope-first fallback replies.')
+          setNotice('Live AI backend is not connected on this host. RN AI Chat Bot is running in profile-only fallback mode.')
           return
         }
 
@@ -383,19 +356,16 @@ export default function ChatWidget() {
     } catch (sendError) {
       if (endpoint.startsWith('/')) {
         const scopeReply = buildScopeFirstReply(value)
-        const webReply = scopeReply ? null : await buildWebFallbackReply(value)
-        const finalReply = scopeReply || webReply || buildReachOutSuggestion()
+        const finalReply = scopeReply || buildReachOutSuggestion()
 
         setMessages((current) => [
           ...current,
           {
             role: 'assistant',
-            content: scopeReply
-              ? finalReply
-              : `${finalReply}\n\n${buildReachOutSuggestion()}`
+            content: finalReply
           }
         ])
-        setNotice('Live AI backend is unreachable. Showing scope-first fallback replies.')
+        setNotice('Live AI backend is unreachable. RN AI Chat Bot is running in profile-only fallback mode.')
         return
       }
 
@@ -413,7 +383,7 @@ export default function ChatWidget() {
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
     >
       {isOpen && (
-        <section id="chat-widget-panel" className="chat-widget-panel" aria-label="AI chat assistant">
+        <section id="chat-widget-panel" className="chat-widget-panel" aria-label="RN AI Chat Bot assistant">
           <header className="chat-widget-header chat-widget-drag-handle" onPointerDown={startDrag}>
             <h2>
               <span className="chat-widget-avatar" aria-hidden>
@@ -421,7 +391,7 @@ export default function ChatWidget() {
                   <path d="M9 3h6v2h2a3 3 0 013 3v6a3 3 0 01-3 3h-2v2h-6v-2H7a3 3 0 01-3-3V8a3 3 0 013-3h2V3zm-2 4a1 1 0 00-1 1v6a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1H7zm2 3a1 1 0 100 2 1 1 0 000-2zm6 0a1 1 0 100 2 1 1 0 000-2z" />
                 </svg>
               </span>
-              AI Chat
+              RN AI Chat Bot
             </h2>
             <button
               type="button"
@@ -494,7 +464,7 @@ export default function ChatWidget() {
             <path d="M9 3h6v2h2a3 3 0 013 3v6a3 3 0 01-3 3h-2v2h-6v-2H7a3 3 0 01-3-3V8a3 3 0 013-3h2V3zm-2 4a1 1 0 00-1 1v6a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1H7zm2 3a1 1 0 100 2 1 1 0 000-2zm6 0a1 1 0 100 2 1 1 0 000-2z" />
           </svg>
         </span>
-        {isOpen ? 'Close Chat' : 'AI Chat'}
+        {isOpen ? 'Close Chat' : 'RN AI Chat Bot'}
       </button>
     </div>
   )
