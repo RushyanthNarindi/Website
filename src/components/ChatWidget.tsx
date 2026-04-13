@@ -91,20 +91,67 @@ const starterMessage: ChatMessage = {
   content: 'Hi, I am RN AI Chat Bot. I am here to answer questions about Rushyanth. Ask What can you do? to see my capabilities.'
 }
 
+function normalizeText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9+\-*/().%\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function tokenize(value: string): string[] {
+  return normalizeText(value).split(' ').filter(Boolean)
+}
+
+function containsAnyPhrase(text: string, phrases: string[]): boolean {
+  return phrases.some((phrase) => text.includes(normalizeText(phrase)))
+}
+
+function scoreTagMatch(normalizedPrompt: string, promptTokens: string[], tag: string): number {
+  const normalizedTag = normalizeText(tag)
+  if (!normalizedTag) return 0
+
+  if (normalizedPrompt.includes(normalizedTag)) return 1
+
+  const tagTokens = tokenize(normalizedTag)
+  if (tagTokens.length === 0) return 0
+
+  const overlap = tagTokens.filter((token) => promptTokens.includes(token)).length
+  return overlap / tagTokens.length
+}
+
+function detectScopeReply(prompt: string): string | null {
+  const normalizedPrompt = normalizeText(prompt)
+  const promptTokens = tokenize(prompt)
+
+  let bestScore = 0
+  let bestAnswer: string | null = null
+
+  for (const item of scopeKnowledge) {
+    const score = Math.max(...item.tags.map((tag) => scoreTagMatch(normalizedPrompt, promptTokens, tag)))
+    if (score > bestScore) {
+      bestScore = score
+      bestAnswer = item.answer
+    }
+  }
+
+  return bestScore >= 0.55 ? bestAnswer : null
+}
+
 function buildCapabilitiesReply(): string {
   return `I can help with:\n- ${assistantCapabilities.join('\n- ')}\n\nI focus on Rushyanth-specific questions. For anything outside that scope, please reach out through the Contact page.`
 }
 
 function tryGreeting(prompt: string): string | null {
-  const text = prompt.toLowerCase().trim()
-  const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening']
-  const thanks = ['thanks', 'thank you', 'thx']
+  const text = normalizeText(prompt)
+  const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'yo']
+  const thanks = ['thanks', 'thank you', 'thx', 'ty']
 
-  if (greetings.includes(text)) {
+  if (containsAnyPhrase(text, greetings)) {
     return 'Hello. I am RN AI Chat Bot. I can explain Rushyanth\'s profile, projects, skills, and contact options. You can also ask What can you do?'
   }
 
-  if (thanks.includes(text)) {
+  if (containsAnyPhrase(text, thanks)) {
     return 'You are welcome. If you want, ask about Rushyanth\'s projects, skills, writings, stats, or contact info.'
   }
 
@@ -112,7 +159,20 @@ function tryGreeting(prompt: string): string | null {
 }
 
 function tryDirectArithmetic(prompt: string): string | null {
-  const expression = prompt.trim()
+  const normalized = normalizeText(prompt)
+
+  const arithmeticIntentPrefixes = ['what is ', 'whats ', 'solve ', 'compute ', 'calculate ']
+  let expression = normalized
+
+  for (const prefix of arithmeticIntentPrefixes) {
+    if (expression.startsWith(prefix)) {
+      expression = expression.slice(prefix.length).trim()
+      break
+    }
+  }
+
+  expression = expression.replace(/^=+|=+$/g, '').trim()
+
   if (!expression) return null
 
   if (!/^[0-9+\-*/().%\s]+$/.test(expression)) return null
@@ -176,7 +236,7 @@ function tryRewrite(prompt: string): string | null {
 }
 
 function tryLocalCapabilityReply(prompt: string): string | null {
-  const text = prompt.toLowerCase().trim()
+  const text = normalizeText(prompt)
 
   if (
     text.includes('what can you do') ||
@@ -197,13 +257,9 @@ function tryLocalCapabilityReply(prompt: string): string | null {
 }
 
 function buildLocalFallbackReply(prompt: string): string {
-  const text = prompt.toLowerCase()
+  const matched = detectScopeReply(prompt)
 
-  const matched = scopeKnowledge.find((item) =>
-    item.tags.some((tag) => text.includes(tag))
-  )
-
-  if (matched) return matched.answer
+  if (matched) return matched
 
   return 'I focus on Rushyanth-specific questions only. Please ask about profile, projects, skills, writings, stats, GitHub, or contact details.'
 }
