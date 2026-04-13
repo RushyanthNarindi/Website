@@ -12,6 +12,32 @@ const starterMessage: ChatMessage = {
   content: 'Hi, I am your portfolio AI assistant. Ask me anything.'
 }
 
+function buildLocalFallbackReply(prompt: string): string {
+  const text = prompt.toLowerCase()
+
+  if (text.includes('age') || text.includes('old')) {
+    return 'Rushyanth is 26 years old.'
+  }
+
+  if (text.includes('city') || text.includes('live') || text.includes('location')) {
+    return 'Rushyanth is currently based in Dallas, TX.'
+  }
+
+  if (text.includes('country') || text.includes('travel') || text.includes('visited')) {
+    return 'Countries visited include USA, India, and Abu Dhabi.'
+  }
+
+  if (text.includes('contact') || text.includes('email')) {
+    return 'You can use the Contact page on this website to reach Rushyanth.'
+  }
+
+  if (text.includes('resume') || text.includes('experience') || text.includes('skills')) {
+    return 'Please check the Resume and About pages for experience, projects, and skills.'
+  }
+
+  return 'I am running in local assistant mode right now. Ask me about profile basics like location, age, countries visited, projects, and contact info.'
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [position, setPosition] = useState({ x: 16, y: 16 })
@@ -24,6 +50,7 @@ export default function ChatWidget() {
   const [input, setInput] = useState('')
   const [isSending, setIsSending] = useState(false)
   const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
   const widgetRef = useRef<HTMLDivElement | null>(null)
   const draggedRef = useRef(false)
   const messagesRef = useRef<HTMLDivElement | null>(null)
@@ -129,6 +156,7 @@ export default function ChatWidget() {
     setMessages(nextMessages)
     setInput('')
     setError('')
+    setNotice('')
     setIsSending(true)
 
     try {
@@ -146,7 +174,19 @@ export default function ChatWidget() {
 
       if (!response.ok) {
         const data = await response.json().catch(() => null)
-        const apiMessage = data?.error || `Request failed with status ${response.status}`
+        const status = response.status
+        const usingRelativeEndpoint = endpoint.startsWith('/')
+
+        if (usingRelativeEndpoint && (status === 404 || status === 405)) {
+          setMessages((current) => [
+            ...current,
+            { role: 'assistant', content: buildLocalFallbackReply(value) }
+          ])
+          setNotice('Live AI backend is not connected on this host. Showing local assistant replies.')
+          return
+        }
+
+        const apiMessage = data?.error || `Request failed with status ${status}`
         throw new Error(apiMessage)
       }
 
@@ -159,6 +199,15 @@ export default function ChatWidget() {
 
       setMessages((current) => [...current, { role: 'assistant', content: reply }])
     } catch (sendError) {
+      if (endpoint.startsWith('/')) {
+        setMessages((current) => [
+          ...current,
+          { role: 'assistant', content: buildLocalFallbackReply(value) }
+        ])
+        setNotice('Live AI backend is unreachable. Showing local assistant replies.')
+        return
+      }
+
       const reason = sendError instanceof Error ? sendError.message : 'Unknown error'
       setError(`Could not get a response. ${reason}`)
     } finally {
@@ -230,6 +279,12 @@ export default function ChatWidget() {
           {error && (
             <p className="chat-widget-error" role="status">
               {error}
+            </p>
+          )}
+
+          {notice && !error && (
+            <p className="chat-widget-note" role="status">
+              {notice}
             </p>
           )}
         </section>
