@@ -10,6 +10,12 @@ Throughout my career, I have worked on projects that demonstrate my abilities an
 # Writings
 In addition to my technical work, I enjoy writing about technology and sharing insights with others. My articles cover topics from case studies to trends in computing.
 
+# Skills
+- Cloud Computing (Azure, AWS)
+- Full-Stack Web Development (React, Node.js)
+- Data Analysis and Visualization
+- AI and Machine Learning Concepts
+
 # Current Focus
 - Build reliable full-stack web products
 - Improve user experience with strong design systems
