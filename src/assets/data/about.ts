@@ -19,7 +19,8 @@ After that, I completed my Master’s degree in Information Assurance and Cyber 
 
 
 # I like 
-outside of Academics and work, I enjoy a mix of technical and non-technical activities.
+Outside of academics and work, I enjoy a mix of technical and non-technical activities.
+
 - Running 
 - Volleyball
 - Skating
