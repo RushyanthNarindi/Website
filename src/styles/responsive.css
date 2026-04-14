@@ -1,0 +1,78 @@
+/* Hero layout & button styles */
+.hero-inner{max-width:720px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem}
+.btn{padding:0.6rem 1.5rem;border-radius:8px;text-decoration:none;transition:opacity .15s}
+.btn:not(.ghost){background:var(--accent-1);color:var(--text-inverse)}
+.btn.ghost{border:1.5px solid var(--accent-1);color:var(--accent-1)}
+.btn:hover{opacity:0.85}
+
+/* Fluid typography */
+h1{font-size:clamp(1.75rem,5vw,3rem)}
+h2{font-size:clamp(1.25rem,3.5vw,2rem)}
+h3{font-size:clamp(1rem,2.5vw,1.5rem)}
+.lead{font-size:clamp(1rem,2.5vw,1.25rem);line-height:1.6;color:var(--muted)}
+
+/* Fluid spacing & sizing (clamp auto-adapts - no media query needed) */
+.hero{padding:clamp(1.5rem,5vw,4rem) 0}
+.content{padding:clamp(1.25rem,4vw,2.5rem) 0}
+.container{padding:clamp(0.75rem,3vw,1.25rem)}
+.logo-mark{width:clamp(140px,25vw,250px);height:clamp(32px,6vw,58px)}
+
+/* Header right group: wraps nav + theme-toggle + hamburger */
+.header-right{display:flex;align-items:center;gap:0.5rem}
+
+/* Hamburger - hidden on desktop, shown on mobile */
+.nav-toggle{display:none;background:var(--toggle-bg,transparent);border:1px solid var(--toggle-border,var(--border-default));border-radius:8px;padding:.35rem .6rem;cursor:pointer;color:var(--toggle-color);min-width:40px;min-height:36px;align-items:center;justify-content:center}
+.nav-toggle svg{width:20px;height:20px;display:block;fill:currentColor}
+.nav-toggle:focus{outline:2px solid transparent;box-shadow:0 0 0 3px var(--focus-accent)}
+
+/* ---- Mobile (<= 768px) ---- */
+@media(max-width:768px){
+  .nav-toggle{display:inline-flex}
+
+  /* Nav drops down absolutely below the sticky header */
+  .nav{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--header-bg,var(--bg));
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--toggle-border,var(--border-default));
+    z-index:200
+  }
+  .nav.nav-open{display:block}
+
+  .nav ul{flex-direction:column;gap:0;padding:0.5rem 1.25rem}
+  .nav a{display:block;padding:0.65rem 0.5rem;border-radius:0;border-bottom:1px solid var(--nav-item-divider)}
+  .nav li:last-child a{border-bottom:none}
+  :root[data-theme='dark'] .nav a{border-bottom-color:var(--nav-item-divider)}
+
+  /* Scrollable table on small screens */
+  .content table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Stack hero CTAs vertically */
+  .hero-ctas{flex-direction:column;align-items:flex-start}
+
+	.stats-activity{padding:0.7rem}
+	.project-card{padding:0.9rem}
+
+	.footer-grid{grid-template-columns:1fr;gap:1.25rem}
+	.footer-profile h2{font-size:1.45rem}
+	.footer-links div{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+	.contact-email{min-height:66px;border-radius:14px;padding:0.75rem 1rem}
+	.contact-row{grid-template-columns:1fr}
+	.contact-submit{justify-self:stretch}
+	.contact-divider{margin:1.9rem auto 1.25rem}
+	.contact-socials a{width:44px;height:44px}
+	.chat-widget-panel{width:min(95vw,360px);min-width:0;max-width:95vw;max-height:72vh;resize:none}
+	.chat-widget-submit{justify-self:stretch}
+}
+
+/* ---- Tablet (769px - 1024px) ---- */
+@media(min-width:769px) and (max-width:1024px){
+  .nav ul{gap:0.4rem}
+  .nav a{padding:0.4rem 0.4rem;font-size:0.9rem}
+}

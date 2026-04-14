@@ -1,0 +1,33 @@
+/* Global chat popup */
+.chat-widget-shell{position:fixed;z-index:400;display:grid;gap:0.7rem;justify-items:end;touch-action:none}
+.chat-widget-trigger{min-height:48px;padding:0.5rem 0.9rem;border-radius:999px;border:1px solid var(--border-accent-max);background:linear-gradient(120deg,var(--chat-trigger-gradient-start),var(--chat-trigger-gradient-end));color:var(--text-inverse);font:inherit;font-weight:700;cursor:grab;box-shadow:var(--chat-trigger-shadow);display:inline-flex;align-items:center;gap:0.55rem}
+.chat-widget-trigger:active{cursor:grabbing}
+.chat-widget-panel{width:min(92vw,370px);min-width:300px;min-height:360px;max-width:min(95vw,700px);max-height:80vh;border-radius:16px;border:1px solid var(--border-contrast);background:var(--bg);box-shadow:var(--chat-panel-shadow);padding:0.8rem;display:flex;flex-direction:column;gap:0.7rem;overflow:auto;resize:both}
+.chat-widget-header{display:flex;align-items:center;justify-content:space-between;gap:0.7rem}
+.chat-widget-header h2{margin:0;font-size:1rem;display:inline-flex;align-items:center;gap:0.45rem}
+.chat-widget-close{width:30px;height:30px;border-radius:8px;border:1px solid var(--border-contrast);background:transparent;color:var(--text);font-size:1.25rem;line-height:1;cursor:pointer}
+.chat-widget-drag-handle{cursor:grab;user-select:none}
+.chat-widget-drag-handle:active{cursor:grabbing}
+.chat-widget-avatar{width:24px;height:24px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:var(--chat-avatar-bg);border:1px solid var(--chat-avatar-border);box-shadow:inset 0 0 0 1px var(--chat-avatar-ring)}
+.chat-widget-avatar svg{width:15px;height:15px;display:block;fill:currentColor}
+.chat-widget-messages{flex:1 1 auto;min-height:140px;overflow:auto;display:grid;gap:0.65rem;padding:0.65rem;border:1px solid var(--border-strong);border-radius:12px;background:var(--surface-accent-soft)}
+.chat-widget-message{max-width:100%;padding:0.6rem 0.75rem;border-radius:10px;border:1px solid var(--border-default);background:var(--chat-message-bg)}
+.chat-widget-message-role{margin:0 0 0.25rem;font-size:0.76rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.chat-widget-message-text{margin:0;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.chat-widget-message.is-user{justify-self:end;background:var(--surface-info-strong);border-color:var(--border-info-strong)}
+.chat-widget-form{display:grid;gap:0.55rem}
+.chat-widget-input{width:100%;resize:vertical;min-height:78px;padding:0.7rem 0.85rem;border-radius:10px;border:1px solid var(--border-info-max);background:var(--surface-info-soft);color:var(--text);font:inherit}
+.chat-widget-submit{justify-self:end;min-height:38px;padding:0.4rem 0.8rem;border-radius:8px;border:1px solid var(--border-accent-strong);background:var(--surface-accent-strong);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
+.chat-widget-submit:disabled{opacity:.65;cursor:not-allowed}
+.chat-widget-error{margin:0;color:var(--status-error);font-size:0.9rem;font-weight:600}
+.chat-widget-note{margin:0;color:var(--status-note);font-size:0.88rem;font-weight:600}
+
+:root[data-theme='dark'] .chat-widget-panel{border-color:var(--chat-panel-border-strong);box-shadow:var(--chat-panel-shadow-strong)}
+:root[data-theme='dark'] .chat-widget-close{border-color:var(--border-contrast)}
+:root[data-theme='dark'] .chat-widget-messages{border-color:var(--border-muted);background:var(--surface-elevated-strong)}
+:root[data-theme='dark'] .chat-widget-message{background:var(--surface-elevated);border-color:var(--border-strong)}
+:root[data-theme='dark'] .chat-widget-message.is-user{background:var(--surface-info-strong);border-color:var(--border-info-strong)}
+:root[data-theme='dark'] .chat-widget-input{background:var(--surface-info-soft);border-color:var(--border-info-max)}
+:root[data-theme='dark'] .chat-widget-error{color:var(--status-error)}
+:root[data-theme='dark'] .chat-widget-note{color:var(--status-note)}
+:root[data-theme='dark'] .chat-widget-avatar{background:var(--chat-avatar-bg);border-color:var(--chat-avatar-border)}

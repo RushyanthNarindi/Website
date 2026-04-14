@@ -46,6 +46,40 @@ This project is a personal website built with React, TypeScript, and Vite. The f
 3. Install dependencies with `npm install`.
 4. Start the development server with `npm run dev`.
 
+## Styling Architecture
+
+The frontend styles now use a modular, token-first CSS system inspired by scalable design-system structure.
+
+### Entry point
+
+- `src/styles.css` imports all style layers in order.
+
+### Style layers
+
+1. `src/styles/tokens.css`
+  - Theme and semantic design tokens.
+  - Light/dark overrides live here.
+2. `src/styles/base.css`
+  - Global element defaults and layout primitives.
+3. `src/styles/shell.css`
+  - Header, nav, footer, and shared chrome.
+4. `src/styles/pages.css`
+  - Page-specific blocks (stats, resume, contact).
+5. `src/styles/widgets.css`
+  - Floating chat widget styles.
+6. `src/styles/responsive.css`
+  - Shared responsive behavior and breakpoints.
+
+### Editing guidelines
+
+- Add new color or state values to `tokens.css` first.
+- Prefer semantic variables (for example: `--border-default`, `--surface-info-mid`) instead of new raw color literals.
+- Keep selector ownership clear:
+  - Shell/layout concerns in `shell.css`
+  - Page concerns in `pages.css`
+  - Widget concerns in `widgets.css`
+- Keep `styles.css` as import-only to preserve layer order.
+
 ## Deployment
 
 1. Push changes to `main`.

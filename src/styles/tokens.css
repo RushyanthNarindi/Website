@@ -1,0 +1,119 @@
+:root{--bg:#ffffff;--text:#000000;--muted:#94a3b8;--accent-1:#7c3aed;--accent-2:#06b6d4;--max-width:1100px;
+	--text-inverse: #ffffff;
+	--text-primary: #000000;
+	--link: var(--accent-1);
+	--header-bg: rgba(255,255,255,0.95);
+	--header-border: rgba(0,0,0,0.06);
+	--border-muted: rgba(0,0,0,0.06);
+	--border-default: rgba(0,0,0,0.08);
+	--border-strong: rgba(0,0,0,0.1);
+	--border-contrast: rgba(0,0,0,0.12);
+	--surface-elevated: rgba(255,255,255,0.5);
+	--surface-elevated-strong: rgba(255,255,255,0.6);
+	--surface-accent-soft: rgba(124,58,237,0.03);
+	--surface-accent-muted: rgba(124,58,237,0.02);
+	--surface-accent-mid: rgba(124,58,237,0.08);
+	--surface-accent-strong: rgba(124,58,237,0.12);
+	--surface-accent-hover: rgba(124,58,237,0.18);
+	--surface-accent-subtle-hover: rgba(124,58,237,0.07);
+	--surface-accent-footer-end: rgba(124,58,237,0.01);
+	--border-accent-soft: rgba(124,58,237,0.2);
+	--border-accent-mid: rgba(124,58,237,0.24);
+	--border-accent-strong: rgba(124,58,237,0.35);
+	--border-accent-max: rgba(124,58,237,0.42);
+	--surface-info-soft: rgba(59,130,246,0.07);
+	--surface-info-mid: rgba(59,130,246,0.08);
+	--surface-info-strong: rgba(59,130,246,0.12);
+	--surface-info-emphasis: rgba(59,130,246,0.16);
+	--border-info-soft: rgba(59,130,246,0.18);
+	--border-info-mid: rgba(59,130,246,0.22);
+	--border-info-strong: rgba(59,130,246,0.25);
+	--border-info-max: rgba(59,130,246,0.3);
+	--focus-accent: rgba(124,58,237,0.18);
+	--focus-info: rgba(59,130,246,0.22);
+	--status-success: #15803d;
+	--status-error: #dc2626;
+	--status-note: #0f766e;
+	--social-icon-color: #5f636b;
+	--input-placeholder-strong: #64748b;
+	--nav-item-divider: rgba(0,0,0,0.05);
+	--chat-panel-shadow: 0 18px 50px rgba(0,0,0,0.26);
+	--chat-panel-shadow-strong: 0 20px 50px rgba(0,0,0,0.5);
+	--chat-trigger-shadow: 0 10px 25px rgba(0,0,0,0.2);
+	--chat-trigger-gradient-start: rgba(124,58,237,0.95);
+	--chat-trigger-gradient-end: rgba(6,182,212,0.95);
+	--chat-avatar-bg: rgba(255,255,255,0.24);
+	--chat-avatar-border: rgba(255,255,255,0.45);
+	--chat-avatar-ring: rgba(255,255,255,0.15);
+	--chat-message-bg: #ffffff;
+	--chat-panel-border-strong: rgba(255,255,255,0.15);
+}
+/* sensible defaults so the toggle is visible before JS sets data-theme */
+:root{
+	--toggle-bg: rgba(255,255,255,0.03);
+	--toggle-border: rgba(255,255,255,0.12);
+	--toggle-color: #e6eef8;
+}
+
+/* Theme variables applied via [data-theme] on <html> */
+:root[data-theme='dark']{
+	--bg: #000000;
+	--muted: #94a3b8;
+	--text: #ffffff;
+	--text-primary: #ffffff;
+	--header-bg: rgba(0,0,0,0.85);
+	--header-border: rgba(0,0,0,0.04);
+	--link: var(--accent-1);
+	--border-muted: rgba(255,255,255,0.14);
+	--border-default: rgba(255,255,255,0.12);
+	--border-strong: rgba(255,255,255,0.16);
+	--border-contrast: rgba(255,255,255,0.18);
+	--surface-elevated: rgba(255,255,255,0.03);
+	--surface-elevated-strong: rgba(255,255,255,0.04);
+	--surface-accent-soft: rgba(255,255,255,0.04);
+	--surface-accent-muted: rgba(255,255,255,0.03);
+	--surface-accent-mid: rgba(124,58,237,0.2);
+	--surface-accent-strong: rgba(124,58,237,0.16);
+	--surface-accent-hover: rgba(124,58,237,0.18);
+	--surface-accent-subtle-hover: rgba(124,58,237,0.07);
+	--surface-accent-footer-end: rgba(255,255,255,0.01);
+	--border-accent-soft: rgba(124,58,237,0.2);
+	--border-accent-mid: rgba(124,58,237,0.4);
+	--border-accent-strong: rgba(124,58,237,0.35);
+	--border-accent-max: rgba(124,58,237,0.42);
+	--surface-info-soft: rgba(59,130,246,0.12);
+	--surface-info-mid: rgba(59,130,246,0.12);
+	--surface-info-strong: rgba(59,130,246,0.15);
+	--surface-info-emphasis: rgba(59,130,246,0.16);
+	--border-info-soft: rgba(96,165,250,0.32);
+	--border-info-mid: rgba(96,165,250,0.38);
+	--border-info-strong: rgba(96,165,250,0.34);
+	--border-info-max: rgba(96,165,250,0.35);
+	--status-success: #4ade80;
+	--status-error: #f87171;
+	--status-note: #2dd4bf;
+	--social-icon-color: #b2b7c1;
+	--input-placeholder-strong: #9ca9c0;
+	--nav-item-divider: rgba(255,255,255,0.06);
+	--chat-avatar-bg: rgba(255,255,255,0.12);
+	--chat-avatar-border: rgba(255,255,255,0.24);
+	--chat-avatar-ring: rgba(255,255,255,0.15);
+	--chat-message-bg: rgba(255,255,255,0.03);
+	--chat-panel-border-strong: rgba(255,255,255,0.15);
+	--toggle-bg: rgba(255,255,255,0.03);
+	--toggle-border: rgba(255,255,255,0.12);
+	--toggle-color: var(--text);
+}
+
+:root[data-theme='light']{
+	--bg: #ffffff;
+	--muted: #475569;
+	--text: #000000;
+	--text-primary: #000000;
+	--header-bg: rgba(255,255,255,0.95);
+	--header-border: rgba(0,0,0,0.06);
+	--link: var(--accent-1);
+	--toggle-bg: rgba(11,18,32,0.03);
+	--toggle-border: rgba(11,18,32,0.08);
+	--toggle-color: var(--text);
+}
