@@ -8,17 +8,33 @@ My background actually connects through a common theme of building and securing 
 My Mechanical Engineering background actually gave me a strong foundation in systems thinking and problem-solving. I learned how to design and analyze complex systems by understanding how different components interact, how to handle load and failure conditions, and how to optimize for efficiency.
 
 I apply the same principles in cloud engineering—designing scalable architectures, ensuring reliability, and optimizing performance and cost. So while the domain changed, the core engineering mindset remains the same.
-# Professional Summary
-Azure DevOps and SRE Engineer with hands-on experience in Azure cloud infrastructure, automation, and platform engineering. Skilled in Infrastructure as Code, CI/CD pipelines, and cloud service integration across compute, networking, and security domains. Contributed to Azure global region buildouts and production readiness with a strong focus on scalable, secure, and resilient delivery.
 
 # About Me
-When I was young, I was always curious about how things work. This made me like science in school. I started to understand physics by imagining how things move and work, which helped me learn ideas like motion and mechanics. Later, I earned my degree in Mechanical Engineering from MIT Manipal in India.
+When I was young, I was always curious about how things work. This made me like science in school. I started to understand physics by imagining how things move and work, which helped me adapt to Core Law of Physics. Later, I earned my degree in Mechanical Engineering from MIT Manipal in India.
 
 During the lockdown, I spent a lot of time on my laptop and began exploring cybersecurity by following online tutorials. I practiced by testing and learning on my own home network, phone, and email systems in a safe and controlled way. This hands-on experience helped me understand the core concepts of cybersecurity and showed me a clear career path where I could apply my skills and interests.
 
 After that, I completed my Master’s degree in Information Assurance and Cyber Security from Gannon University. During my master’s, I worked on a project where I helped design an educational module for a Cyber Attack Defense Lab. This module was meant to teach students how to defend against cyber attacks. I created detailed documentation and instructions for the lab, which helped students understand how to set up and use the lab effectively. This experience gave me a deeper understanding of cybersecurity concepts and how to communicate them clearly.
 
-Outside of academics and work, I enjoy a mix of technical and non-technical activities. I like cooking and playing volleyball, and I also spend time building software applications and experimenting with AI agents for fun. In my free time, I enjoy staying updated with the latest trends in technology and cybersecurity, which keeps me motivated to keep learning and growing in the field of cloud engineering and cybersecurity.
 
-Thanks for reading about me! I hope that you enjoy exploring the rest of my portfolio website and everything it has to offer. If you have any questions or comments i wwould love to hear them. You can reach me thorugh the contact page or shoot me an email at rushyanthnarindi@gmail.com
+
+# I like 
+outside of Academics and work, I enjoy a mix of technical and non-technical activities.
+- Running 
+- Volleyball
+- Skating
+- Swimming
+- Cooking
+- Valorant
+- Photography
+- Reynolds Trimax Pen
+- Movies and TV shows especially strong character development and storytelling
+- Building Websites- ethier continaully improving this one or building fun side projects
+- Experimenting with AI agents and seeing how they can be applied to real-world problems in creative ways
+- APJ Abdul Kalam Garu a lot and his philosophy on "Creating Harmonya and Peace" 
+- Michael D'Angelo insipred me to build this personal portfolio website to share my work and ideas with the world.
+
+# Thanks for reading about me!
+I hope that you enjoy exploring the rest of my portfolio website and everything it has to offer. If you have any questions or comments i wwould love to hear them. You can reach me thorugh the contact page or shoot me an email at rushyanthnarindi@gmail.com
+
 `;
