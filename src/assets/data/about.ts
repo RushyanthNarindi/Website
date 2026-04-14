@@ -1,23 +1,24 @@
-export const aboutMarkdown = `# Intro
-This website is designed to showcase my personal experiences in IT, my projects, and my writings. Here, you will find information about my background, skills, and the work I have done in the field of technology.
+export const aboutMarkdown = `# Welcome
+I'm Rushyanth Swamy Narindi
 
-# My Background
-I have a passion for technology and a strong foundation in various IT disciplines. My journey in the tech world has equipped me with the skills needed to tackle complex challenges and deliver innovative solutions.
+Im a currently working as a Cloud Infrastructure Engineer at Aplty technology Corporation, contributing to Microsoft Azure's global region expansion initiatives. 
 
-# Projects
-Throughout my career, I have worked on projects that demonstrate my abilities and creativity. Each project reflects my commitment to excellence and my desire to push the boundaries of what is possible.
+My background actually connects through a common theme of building and securing systems.
 
-# Writings
-In addition to my technical work, I enjoy writing about technology and sharing insights with others. My articles cover topics from case studies to trends in computing.
+My Mechanical Engineering background actually gave me a strong foundation in systems thinking and problem-solving. I learned how to design and analyze complex systems by understanding how different components interact, how to handle load and failure conditions, and how to optimize for efficiency.
 
-# Skills
-- Cloud Computing (Azure, AWS)
-- Full-Stack Web Development (React, Node.js)
-- Data Analysis and Visualization
-- AI and Machine Learning Concepts
+I apply the same principles in cloud engineering—designing scalable architectures, ensuring reliability, and optimizing performance and cost. So while the domain changed, the core engineering mindset remains the same.
+# Professional Summary
+Azure DevOps and SRE Engineer with hands-on experience in Azure cloud infrastructure, automation, and platform engineering. Skilled in Infrastructure as Code, CI/CD pipelines, and cloud service integration across compute, networking, and security domains. Contributed to Azure global region buildouts and production readiness with a strong focus on scalable, secure, and resilient delivery.
 
-# Current Focus
-- Build reliable full-stack web products
-- Improve user experience with strong design systems
-- Explore practical AI workflows for development
+# About Me
+When I was young, I was always curious about how things work. This made me like science in school. I started to understand physics by imagining how things move and work, which helped me learn ideas like motion and mechanics. Later, I earned my degree in Mechanical Engineering from MIT Manipal in India.
+
+During the lockdown, I spent a lot of time on my laptop and began exploring cybersecurity by following online tutorials. I practiced by testing and learning on my own home network, phone, and email systems in a safe and controlled way. This hands-on experience helped me understand the core concepts of cybersecurity and showed me a clear career path where I could apply my skills and interests.
+
+After that, I completed my Master’s degree in Information Assurance and Cyber Security from Gannon University. During my master’s, I worked on a project where I helped design an educational module for a Cyber Attack Defense Lab. This module was meant to teach students how to defend against cyber attacks. I created detailed documentation and instructions for the lab, which helped students understand how to set up and use the lab effectively. This experience gave me a deeper understanding of cybersecurity concepts and how to communicate them clearly.
+
+Outside of academics and work, I enjoy a mix of technical and non-technical activities. I like cooking and playing volleyball, and I also spend time building software applications and experimenting with AI agents for fun. In my free time, I enjoy staying updated with the latest trends in technology and cybersecurity, which keeps me motivated to keep learning and growing in the field of cloud engineering and cybersecurity.
+
+Thanks for reading about me! I hope that you enjoy exploring the rest of my portfolio website and everything it has to offer. If you have any questions or comments i wwould love to hear them. You can reach me thorugh the contact page or shoot me an email at rushyanthnarindi@gmail.com
 `;
