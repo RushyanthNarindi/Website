@@ -155,6 +155,14 @@ Optional frontend variable:
 4. Add env vars from `.env.example` in your deployment provider
 5. Deploy the API on Vercel or another serverless host
 
+### GitHub Pages frontend + external contact API
+
+If the frontend is deployed from GitHub Pages, add this repository secret so the Contact page uses the live external API during the Pages build:
+
+- `VITE_CONTACT_API_URL` = full deployed endpoint, for example `https://your-api.vercel.app/api/contact`
+
+The Pages workflow already injects this value at build time.
+
 ### Hosting notes
 
 - GitHub Pages cannot run `api/contact.js` (static hosting only)

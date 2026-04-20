@@ -27,6 +27,7 @@ jobs:
     - name: Build with Vite
       run: npm run build
       env:
+        VITE_CONTACT_API_URL: ${{ secrets.VITE_CONTACT_API_URL }}
         VITE_CHAT_API_URL: ${{ secrets.VITE_CHAT_API_URL }}
 
 

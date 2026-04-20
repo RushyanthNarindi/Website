@@ -4,6 +4,7 @@ export default function Contact(){
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitState, setSubmitState] = useState<'idle' | 'success' | 'error'>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
+  const configuredEndpoint = import.meta.env.VITE_CONTACT_API_URL?.trim()
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
     event.preventDefault()
@@ -13,7 +14,14 @@ export default function Contact(){
     const name = String(formData.get('name') || '').trim()
     const email = String(formData.get('email') || '').trim()
     const message = String(formData.get('message') || '').trim()
-    const endpoint = import.meta.env.VITE_CONTACT_API_URL || '/api/contact'
+    const isLocalDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    const endpoint = configuredEndpoint || (isLocalDevelopment ? '/api/contact' : '')
+
+    if(!endpoint){
+      setSubmitState('error')
+      setSubmitMessage('Contact form is not configured yet. Add the VITE_CONTACT_API_URL repository secret for the GitHub Pages build.')
+      return
+    }
 
     setIsSubmitting(true)
     setSubmitState('idle')
