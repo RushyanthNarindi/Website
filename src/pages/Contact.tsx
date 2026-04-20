@@ -1,62 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export default function Contact(){
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitState, setSubmitState] = useState<'idle' | 'success' | 'error'>('idle')
-  const [submitMessage, setSubmitMessage] = useState('')
-  const configuredEndpoint = import.meta.env.VITE_CONTACT_API_URL?.trim()
+  const emailAddresses = [
+    'admin@rushyanthnarindi.com',
+    'rushyanthnarindi@gmail.com',
+    'rushyanth99@gmail.com'
+  ]
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
-    event.preventDefault()
-
-    const form = event.currentTarget
-    const formData = new FormData(form)
-    const name = String(formData.get('name') || '').trim()
-    const email = String(formData.get('email') || '').trim()
-    const message = String(formData.get('message') || '').trim()
-    const isLocalDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    const endpoint = configuredEndpoint || (isLocalDevelopment ? '/api/contact' : '')
-
-    if(!endpoint){
-      setSubmitState('error')
-      setSubmitMessage('Contact form is not configured yet. Add the VITE_CONTACT_API_URL repository secret for the GitHub Pages build.')
-      return
+  function splitEmail(address: string) {
+    const atIndex = address.indexOf('@')
+    if (atIndex === -1) {
+      return { prefix: address, domain: '' }
     }
 
-    setIsSubmitting(true)
-    setSubmitState('idle')
-    setSubmitMessage('')
-
-    try{
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-          website: String(formData.get('_gotcha') || '')
-        })
-      })
-
-      if(!response.ok){
-        const data = await response.json().catch(() => null)
-        const apiMessage = data?.error || `Request failed with status ${response.status}`
-        throw new Error(apiMessage)
-      }
-
-      setSubmitState('success')
-      setSubmitMessage('Message sent successfully. Thank you!')
-      form.reset()
-    }catch(error){
-      const reason = error instanceof Error ? error.message : 'Unknown error'
-      setSubmitState('error')
-      setSubmitMessage(`Could not send message. ${reason}`)
-    }finally{
-      setIsSubmitting(false)
+    return {
+      prefix: address.slice(0, atIndex),
+      domain: address.slice(atIndex),
     }
   }
 
@@ -65,40 +24,16 @@ export default function Contact(){
       <div className="container contact-wrap">
         <h1>Get in Touch</h1>
 
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" style={{display:'none'}} />
-          <div className="contact-row">
-            <input
-              className="contact-input"
-              type="text"
-              name="name"
-              placeholder="Your name"
-              required
-            />
-            <input
-              className="contact-input"
-              type="email"
-              name="email"
-              placeholder="Your email"
-              required
-            />
-          </div>
-          <textarea
-            className="contact-input contact-textarea"
-            name="message"
-            placeholder="Your message"
-            rows={5}
-            required
-          />
-          <button className="contact-submit" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending...' : 'Send Message'}
-          </button>
-          {submitState !== 'idle' && (
-            <p className={`contact-status ${submitState === 'success' ? 'is-success' : 'is-error'}`} role="status" aria-live="polite">
-              {submitMessage}
-            </p>
-          )}
-        </form>
+        <div className="contact-email-block" aria-label="Email addresses">
+          {emailAddresses.map((address) => (
+            <div key={address} className="contact-email-container">
+              <a className="contact-email-link" href={`mailto:${address}`}>
+                <span className="contact-email-prefix">{splitEmail(address).prefix}</span>
+                <span className="contact-email-domain">{splitEmail(address).domain}</span>
+              </a>
+            </div>
+          ))}
+        </div>
 
         <p className="contact-note">Usually respond within 24 hours</p>
 
@@ -115,7 +50,7 @@ export default function Contact(){
           <a href="https://github.com/RushyanthNarindi" target="_blank" rel="noreferrer" aria-label="GitHub">
             <svg viewBox="0 0 24 24" aria-hidden><path d="M12 .5A12 12 0 000 12.67a12.17 12.17 0 008.2 11.58c.6.11.82-.27.82-.58v-2.26c-3.34.74-4.04-1.66-4.04-1.66a3.22 3.22 0 00-1.34-1.8c-1.1-.76.08-.74.08-.74a2.56 2.56 0 011.86 1.3 2.52 2.52 0 003.44 1.01 2.6 2.6 0 01.75-1.6c-2.67-.32-5.47-1.38-5.47-6.1a4.87 4.87 0 011.23-3.33 4.6 4.6 0 01.12-3.28s1.01-.33 3.3 1.27a11.12 11.12 0 016 0c2.28-1.6 3.3-1.27 3.3-1.27a4.58 4.58 0 01.11 3.28 4.83 4.83 0 011.24 3.33c0 4.73-2.8 5.77-5.48 6.08a2.9 2.9 0 01.82 2.25v3.33c0 .32.21.7.83.58A12.18 12.18 0 0024 12.67 12 12 0 0012 .5z"/></svg>
           </a>
-          <a href="mailto:rushyanthnarindi@gmail.com" aria-label="Email">
+          <a href="mailto:admin@rushyanthnarindi.com" aria-label="Email">
             <svg viewBox="0 0 24 24" aria-hidden><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>

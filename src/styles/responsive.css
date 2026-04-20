@@ -62,9 +62,8 @@ h3{font-size:clamp(1rem,2.5vw,1.5rem)}
 	.footer-profile h2{font-size:1.45rem}
 	.footer-links div{grid-template-columns:repeat(2,minmax(0,1fr))}
 
-	.contact-email{min-height:66px;border-radius:14px;padding:0.75rem 1rem}
-	.contact-row{grid-template-columns:1fr}
-	.contact-submit{justify-self:stretch}
+  .contact-wrap{min-height:calc(100vh - 12rem)}
+  .contact-email-link{width:100%;padding:0.625rem 1.25rem;border-radius:14px}
 	.contact-divider{margin:1.9rem auto 1.25rem}
 	.contact-socials a{width:44px;height:44px}
 	.chat-widget-panel{width:min(95vw,360px);min-width:0;max-width:95vw;max-height:72vh;resize:none}
