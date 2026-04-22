@@ -6,7 +6,6 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Resume from './pages/Resume'
 import Contact from './pages/Contact'
-import Stats from './pages/Stats'
 import ChatWidget from './components/ChatWidget'
 
 function Writings(){
@@ -33,7 +32,6 @@ export default function App(){
           <Route path="/resume" element={<Resume />} />
           <Route path="/writings" element={<Writings />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/stats" element={<Stats />} />
         </Routes>
       </main>
       <Footer />
